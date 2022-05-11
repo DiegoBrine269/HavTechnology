@@ -2,11 +2,11 @@
     namespace Controllers;
     use MVC\Router;
 
-    class ProductosController {
+    class ClientesController {
         public static function index (Router $router) {
             $router->render('admin/index', [
-                'pagina' => 'Productos',
-                'headers' => ['Sel', 'ID', 'Imagen', 'Nombre', 'Descripción', 'Stock']
+                'pagina' => 'Clientes',
+                'headers' => ['Sel', 'Nombre', 'RFC', 'Dir. Fiscal', 'CP', 'Uso de CFDI', 'Correo']
             ]);
         } 
     }
