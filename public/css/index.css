@@ -2,5 +2,9 @@
 @import 'variables.css';
 @import 'globales.css';
 @import 'inicio.css';
+@import 'formulario.css';
 
-@import 'header/navbar.css';
+@import 'header/header.css';
+@import 'main/main.css';
+@import 'main/sidebar.css';
+@import 'tabla.css';

@@ -1,0 +1,42 @@
+.control .opciones {
+    display: flex;
+    justify-content: flex-start;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.control form {
+    display: flex;
+    justify-content: flex-start;
+    gap: 2rem;
+}
+
+.caja-de-texto {
+    padding: 0.5rem 1rem;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .caja-de-texto {
+        width: 50%;
+    }
+}
+
+.boton {
+    background-color: var(--blanco);
+    color: var(--colorPrincipal);
+    outline: none;
+    border: 2px solid var(--colorPrincipal);
+    border-radius: 0.5rem;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+}
+
+.boton.boton-principal {
+    background-color: var(--colorPrincipal);
+    color: var(--blanco);
+}
+
+.boton:hover {
+    cursor: pointer;
+}

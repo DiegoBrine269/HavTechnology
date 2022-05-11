@@ -1,0 +1,11 @@
+main {
+    width: 100%;
+}
+@media (min-width: 768px) {
+    main {
+        display: grid;
+        grid-template-columns: 0.5fr 3fr;
+        column-gap: 1rem;
+    }
+    
+}   

@@ -2,10 +2,10 @@
     namespace Controllers;
     use MVC\Router;
 
-    class InicioController {
+    class ProductosController {
         public static function index (Router $router) {
-            $router->render('inicio', [
-                'usuario' => 'Horacio'
+            $router->render('productos/index', [
+                'pagina' => 'Productos'
             ]);
         } 
 
