@@ -1,5 +1,13 @@
 <!-- Productos -->
 
+<?php
+    $auth = $_SESSION['auth'] ?? false;
+
+    if(!$auth) {
+        header("Location: /login");
+    }
+?>
+
 <div class="control">
     <form method="GET" action="">
         <input class="caja-de-texto" type="text" name="patron" id="patron">

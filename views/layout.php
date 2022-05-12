@@ -3,7 +3,6 @@
         session_start();
     }
 
-    $auth = $_SESSION['login'] ?? false;
 
     if(!isset($titulo)){
         $titulo = "HAV Technology";
