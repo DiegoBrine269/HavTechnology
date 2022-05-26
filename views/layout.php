@@ -3,7 +3,6 @@
         session_start();
     }
 
-
     if(!isset($titulo)){
         $titulo = "HAV Technology";
     }
