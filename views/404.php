@@ -2,4 +2,5 @@
 
 <div class="contenedor">
     <p>UPS... Página no encontrada</p>
+    <p><a href="">Click aquí para regresar al inicio</a></p>
 </div>
