@@ -2,6 +2,7 @@
     require_once __DIR__ . '/../includes/app.php';
 
     use MVC\Router;
+    use Controllers\ProveedoresController;
     use Controllers\ClientesController;
     use Controllers\InicioController;
     use Controllers\ProductosController;
@@ -16,6 +17,7 @@
     $router->post('/login', [InicioController::class, 'login']);
    
     $router->get('/productos', [ProductosController::class, 'index']);
+    $router->get('/proveedores', [ProveedoresController::class, 'index']);
     $router->get('/clientes', [ClientesController::class, 'index']);
     $router->get('/ventas', [VentasController::class, 'index']);
     $router->get('/devoluciones', [DevolucionesController::class, 'index']);

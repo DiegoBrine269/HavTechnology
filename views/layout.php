@@ -1,4 +1,6 @@
 <?php
+    header('Content-Type: text/html; charset=UTF-8');
+
     if(!isset($_SESSION)){
         session_start();
     }
@@ -48,6 +50,7 @@
         <div class="sidebar">
             <ul class="menu">
                 <li><a class="menu-item" href="/productos">Productos</a></li>
+                <li><a href="/proveedores" class="menu-item">Proveedores</a></li>
                 <li><a href="/clientes" class="menu-item">Clientes</a></li>
                 <li><a href="/ventas" class="menu-item">Ventas</a></li>
                 <li><a href="/devoluciones" class="menu-item">Devoluciones</a></li>

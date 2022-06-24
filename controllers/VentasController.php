@@ -1,16 +1,19 @@
 <?php
     namespace Controllers;
     use MVC\Router;
+    use Models\Venta;
 
     class VentasController {
         public static function index (Router $router) {
+            $ventas = Venta::all();
+
+            //debug($ventas);
+
             $router->render('admin/index', [
                 'pagina' => 'Ventas',
-<<<<<<< HEAD
-                'headers' => ['Sel', 'Nombre', 'RFC', 'Dir. Fiscal', 'CP', 'Uso de CFDI', 'Correo']
-=======
-                'headers' => ['Sel', 'Fecha', 'Cliente', 'Subtotal', 'Total']
->>>>>>> 5318301ca3f94d3cf9c912ad91afc52bcbe114d5
+                'headers' => Venta::getColumnasDB(),
+                'modalTitulo' => 'Registrar una nueva venta',
+                'datos' => $ventas
             ]);
         } 
     }
