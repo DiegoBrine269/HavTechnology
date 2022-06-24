@@ -1,12 +1,12 @@
 <?php
     require_once __DIR__ . '/../includes/app.php';
 
-    use Controllers\ClientesController;
     use MVC\Router;
+    use Controllers\ClientesController;
+    use Controllers\DevolucionesController;
     use Controllers\InicioController;
     use Controllers\ProductosController;
     use Controllers\VentasController;
-    use Controllers\DevolucionesController;
 
     $router = new Router();
 
@@ -19,5 +19,4 @@
     $router->get('/clientes', [ClientesController::class, 'index']);
     $router->get('/ventas', [VentasController::class, 'index']);
     $router->get('/devoluciones', [DevolucionesController::class, 'index']);
-    
     $router->comprobarRutas();

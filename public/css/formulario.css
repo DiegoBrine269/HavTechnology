@@ -40,6 +40,7 @@
 
 .boton:hover {
     cursor: pointer;
+<<<<<<< HEAD
 }
 
 .campo{
@@ -80,3 +81,7 @@
     pointer-events:auto;
 }
 
+=======
+    
+}
+>>>>>>> 7485d876ac53deb534f5981771942aaa8c065db6

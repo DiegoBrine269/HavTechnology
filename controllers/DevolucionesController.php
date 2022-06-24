@@ -6,7 +6,7 @@
         public static function index (Router $router) {
             $router->render('admin/index', [
                 'pagina' => 'Devoluciones',
-                'headers' => ['Sel', 'ID', 'Imagen', 'Nombre', 'Descripción', 'Stock']
+                'headers' => ['Sel', 'Producto', 'Número de venta', 'Pérdida total'];
             ]);
         } 
     }

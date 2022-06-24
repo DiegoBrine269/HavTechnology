@@ -6,7 +6,7 @@
         public static function index (Router $router) {
             $router->render('admin/index', [
                 'pagina' => 'Ventas',
-                'headers' => ['Sel', 'Fecha', 'Cliente', 'Subtotal', 'Total']
+                'headers' => ['Sel', 'Nombre', 'RFC', 'Dir. Fiscal', 'CP', 'Uso de CFDI', 'Correo']
             ]);
         } 
     }
