@@ -173,4 +173,8 @@
                 }
             }
         }
+
+        public static function getColumnasDB() {
+            return static::$columnasDB;
+        }
     }

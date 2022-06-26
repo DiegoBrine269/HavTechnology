@@ -1,4 +1,6 @@
 <?php
+    header('Content-Type: text/html; charset=UTF-8');
+
     if(!isset($_SESSION)){
         session_start();
     }
@@ -33,7 +35,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title> <?php echo $titulo ?> </title>
     <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="../css/index.css">
 
 </head>
 <body>
@@ -48,6 +50,7 @@
         <div class="sidebar">
             <ul class="menu">
                 <li><a class="menu-item" href="/productos">Productos</a></li>
+                <li><a href="/proveedores" class="menu-item">Proveedores</a></li>
                 <li><a href="/clientes" class="menu-item">Clientes</a></li>
                 <li><a href="/ventas" class="menu-item">Ventas</a></li>
                 <li><a href="/devoluciones" class="menu-item">Devoluciones</a></li>

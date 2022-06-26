@@ -3,6 +3,10 @@
 <?php
     $auth = $_SESSION['auth'] ?? false;
 
+    //Indica si en la tabla de la BD la PK es autoincrementable o no
+    if(!isset($autoIncrement))
+        $autoIncrement = true;
+
     // if(!$auth) {
     //     header("Location: /login");
     // }
@@ -15,34 +19,12 @@
     </form>
 
     <div class="opciones">
-        <a href="#modal-registrar" class="boton">Registrar</a>
+        <a href="/<?php echo strtolower($pagina).'/crear'?>" class="boton boton-registrar">Registrar</a>
         <button type="button" class="boton">Actualizar</button>
         <button type="button" class="boton">Eliminar</button>
     </div>
 </div>
 
 <?php include __DIR__ . '/../tabla.php'?>
-
-<div class="modal" id="modal-registrar">
-    <div class="modal-contenido">
-        <a href="#">x</a>
-        <form action="">
-
-            <?php foreach($headers as $header){ ?>
-                <div class="campo">
-                    <label for=""><?php echo $header ?> </label>
-                    <input type="text" value="">
-                </div class="campo">
-            <?php
-                }
-            ?>
-
-
-            <div class="campo">
-                <input class="boton boton-principal" type="submit" value="Guardar">
-            </div>
-        </form>
-    </div>
-</div>
 
 <script src="js/crud.js"></script>

@@ -6,7 +6,8 @@
         public static function index (Router $router) {
             $router->render('admin/index', [
                 'pagina' => 'Devoluciones',
-                'headers' => ['Sel', 'Producto', 'Número de venta', 'Pérdida total'];
+                'headers' => Devolucion::getColumnasDB(),
+                'modalTitulo' => 'Registrar una pérdida'
             ]);
         } 
     }

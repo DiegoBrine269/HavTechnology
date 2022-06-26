@@ -1,3 +1,17 @@
+.formulario {
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .formulario {
+        width: 60%;
+    }
+}
+
+input {
+    height: 2.5rem;
+}
+
 .control .opciones {
     display: flex;
     justify-content: flex-start;
@@ -31,6 +45,7 @@
     display: inline-block;
     padding: 0.5rem 1rem;
     text-decoration: none;
+    height: 2.5rem;
 }
 
 .boton.boton-principal {
@@ -40,48 +55,19 @@
 
 .boton:hover {
     cursor: pointer;
-<<<<<<< HEAD
 }
 
 .campo{
     display: grid;
     grid-template-columns: 1fr 2fr;
-    margin-top: 0.5rem;
+    margin: 1rem 0;
 }
 
-/*Modal*/
-.modal-contenido{
-    background-color: var(--blanco);
-    width:80%;
-    padding: 10px 20px;
-    margin: 20% auto;
-    position: relative;
+.campo-tres {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+    margin: 1rem 0;
 }
 
-@media (min-width: 768px) {
-    .modal-contenido{
-        width: 30%;
-    }
-}
-
-.modal{
-    background-color: rgba(0,0,0,.8);
-    position:fixed;
-    top:0;
-    right:0;
-    bottom:0;
-    left:0;
-    opacity:0;
-    pointer-events:none;
-    transition: all 1s;
-}
-
-#modal-registrar:target{
-    opacity:1;
-    pointer-events:auto;
-}
-
-=======
     
-}
->>>>>>> 7485d876ac53deb534f5981771942aaa8c065db6
