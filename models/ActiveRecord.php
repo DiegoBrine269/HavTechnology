@@ -26,6 +26,10 @@
             }
         }
 
+        public function guardarConID(){
+            return $this->crear();
+        }
+
         public function crear(){
             //Santizar los datos
             $atributos = $this->sanitizarAtributos();
@@ -39,11 +43,7 @@
 
             $resultado = self::$db->query($query);
 
-            //Mensaje de exito o error
-            if($resultado){
-                //Redireccionamos al usuario
-                header('Location: /admin?resultado=1');
-            }
+            return $resultado;
         }
 
         public function actualizar(){
@@ -63,11 +63,7 @@
             $query .= " LIMIT 1";
 
             $resultado = self::$db->query($query);
-            
-            if($resultado){
-                //Redireccionamos al usuario
-                header('Location: /admin?resultado=2');
-            }
+        
             return $resultado;
         }
 
@@ -85,7 +81,7 @@
             $atributos = [];
 
             foreach(static::$columnasDB as $columna){
-                if($columna === 'id') continue; //Ignora id
+                //if($columna === 'id') continue; //Ignora id
                 $atributos[$columna] = $this->$columna;
             }
             return $atributos;
@@ -131,9 +127,16 @@
 
         //Buscar un registro por su id
         public static function find($id){
-            $query = "SELECT * FROM " . static::$tabla . " WHERE id = {$id}";
+            $query = "SELECT * FROM " . static::$tabla . " WHERE id = '{$id}'";
             $resultado = self::consultarSQL($query);
             return array_shift($resultado); //Retorna la primera posición
+        }
+
+        //Buscar registros por su id
+        public static function findAll($id){
+            $query = "SELECT * FROM " . static::$tabla . " WHERE id = '{$id}'";
+            $resultado = self::consultarSQL($query);
+            return $resultado;
         }
 
         public static function consultarSQL($query){

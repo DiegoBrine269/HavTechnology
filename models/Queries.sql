@@ -9,3 +9,11 @@ WHERE P.id = PU.id AND PU.idProveedor = Prov.id;
 
 INSERT INTO Proveedor VALUES ('nombre', 'telefono', 'correo');
 INSERT INTO Producto VALUES ('id', 'nombre', 'descripcion', 'color', 'lote', 'stock', 'idProveedor');
+
+SELECT PU.idUnico, P.color, P.lote, Prov.nombre AS 'nombreProveedor' FROM Producto P, ProductoUnico PU, Proveedor Prov
+WHERE P.id = PU.id AND PU.idProveedor = Prov.id AND P.id = 'ABC';
+
+
+
+/*Obtener último ID de un producto único*/
+SELECT REPLACE(MAX(idUnico), 'ABC', '')  FROM ProductoUnico WHERE id = 'ABC';

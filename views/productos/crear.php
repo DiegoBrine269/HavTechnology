@@ -1,43 +1,43 @@
-<form action="" class="formulario">
+<form action="" class="formulario" method="POST">
     <div class="campo">
         <label for="id">ID (SKU):</label>
-        <input type="text" name="id" id="id">
+        <input type="text" name="producto[id]" id="id">
     </div>
 
     <div class="campo">
         <label for="nombre">Nombre:</label>
-        <input type="text" name="nombre" id="nombre">
+        <input type="text" name="producto[nombre]" id="nombre">
     </div>
 
     <div class="campo">
         <label for="descripcion">Descripción:</label>
-        <input type="textarea" name="descripcion" id="descripcion">
+        <input type="textarea" name="producto[descripcion]" id="descripcion">
     </div>
 
     <div class="campo">
         <label for="color">Color:</label>
-        <input type="text" name="color" id="color">
+        <input type="text" name="producto[color]" id="color">
     </div>
 
     <div class="campo">
         <label for="lote">Lote:</label>
-        <input type="number" min="1" max="999" name="lote" id="lote">
+        <input type="number" min="1" max="999" name="producto[lote]" id="lote">
     </div>
 
     <div class="campo">
-        <label for="cantidad">Cantidad:</label>
-        <input type="number" min="1" max="9999" name="cantidad" id="cantidad">
+        <label for="stock">Cantidad:</label>
+        <input type="number" min="1" max="9999" name="producto[stock]" id="cantidad">
     </div>
 
     
     <div class="campo">
         <label for="proveedor">Proveedor:</label>
-        <select name="proveedor" id="proveedor">
+        <select name="producto[idProveedor]" id="proveedor">
             <?php
                 //Despliega en el select todos los proveedores que están registrados
                 foreach ($proveedores as $proveedor) {
             ?>
-                    <option name="idProveedor" value="<?php echo $proveedor->id; ?>"><?php echo $proveedor->nombre; ?></option>
+                    <option value="<?php echo $proveedor->id; ?>"><?php echo $proveedor->nombre; ?></option>
             <?php   
                 }
             ?>

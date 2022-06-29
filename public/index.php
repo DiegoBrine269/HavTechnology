@@ -18,11 +18,12 @@
    
     $router->get('/productos', [ProductosController::class, 'index']);
     $router->get('/productos/crear', [ProductosController::class, 'crear']);
+    $router->get('/productos/producto', [ProductosController::class, 'visualizar']);
     $router->post('/productos/crear', [ProductosController::class, 'crear']);
 
     $router->get('/proveedores', [ProveedoresController::class, 'index']);
     $router->get('/proveedores/crear', [ProveedoresController::class, 'crear']);
-    $router->post('/proveedores/crear', [ProveedoresController::class, 'crear']);
+    $router->post('/proveedores/crear', [ProveedoresController::class, 'crear']); 
 
     $router->get('/clientes', [ClientesController::class, 'index']);
     $router->get('/clientes/crear', [ClientesController::class, 'crear']);

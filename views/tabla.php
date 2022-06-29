@@ -20,12 +20,33 @@
                     <input type="checkbox" name="" id="">
                 </td>
 
-            <?php foreach ($dato as $key => $value) { ?>
-                        
-                <td> <?php echo $value ?></td>
+            <?php 
+                foreach ($dato as $key => $value) {      
+            ?>                        
+                
+                <?php 
+                    if(!is_null($value)) { 
+                ?>
+                            <td>
+                                
+                                <?php
+                                    if ($key === 'nombre') {
+                                ?>
+                                        <a href=<?php echo "/productos/producto?id=". $dato->id; ?> > <?php echo $value; ?> </a>
+                                <?php 
+                                    }
+                                    else {
+                                        echo $value;
+                                    }
+                                ?>
 
-            <?php   } ?>
-            <?php } ?>
+                                    
+                            </td>
+            <?php       } 
+
+                    } 
+                } 
+            ?>
         </tr>
     </tbody>
 </table>
