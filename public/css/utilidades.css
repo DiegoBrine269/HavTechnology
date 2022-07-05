@@ -1,0 +1,20 @@
+.contenedor {
+    max-width: 90%;
+    margin: 0 auto;
+}
+
+.invisible {
+    display: none;
+}
+
+.visible {
+    display: auto;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.capitalize {
+    text-transform: capitalize; 
+}
