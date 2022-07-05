@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "name": "laravel/laravel",
     "type": "project",
     "description": "The Laravel Framework.",
@@ -58,4 +59,22 @@
     },
     "minimum-stability": "dev",
     "prefer-stable": true
+=======
+    "name": "diieg/hav-technology",
+    "description": "Aplicación web para el control de inventarios de Hav Technology",
+    "authors": [
+        {
+            "name": "Diego Oloarte"
+        }
+    ],
+    "require": {},
+    "autoload" : {
+        "psr-4": {
+            "MVC\\": "./",
+            "Models\\" : "./models",
+            "Views\\": "./views",
+            "Controllers\\": "./controllers"
+        }
+    }
+>>>>>>> 9486bf87cba6c8c6a37778ff6ba4510925533f38
 }
