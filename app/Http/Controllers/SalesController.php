@@ -8,6 +8,8 @@ use App\Models\Customer;
 use App\Models\Product;
 use App\Models\SalesProduct;
 use App\Models\UniqueProduct;
+use Illuminate\Support\Facades\DB;
+use PDF;
 
 class SalesController extends Controller
 {
@@ -119,6 +121,177 @@ class SalesController extends Controller
             ]);
         }
     }
+
+
+    public function reporte (Request $request) {
+        if(!isset($request->tipo)) 
+        return redirect('/ventas');
+        
+        $tipo = $request->tipo;
+        $ventas = [];
+        $total = '0';
+        $nombreDocumento = '';
+        $fecha = date('d/M/Y');
+        $fechaInicial = '';
+        $fechaFinal = '';
+        // dd($fecha);
+
+
+        switch ($tipo) {
+            case 'anual':
+                $ventas = DB::select( 'select
+                        sales.id,
+                        customers.nombre as nombreCliente,
+                        sales.fecha,
+                        sales.total
+                    from
+                        sales
+                        inner join customers on sales.idCliente = customers.id
+                    where
+                        YEAR(fecha)=YEAR(NOW())
+                    order by
+                        sales.id asc' );
+
+                $total = DB::select( 'select
+                        sum(sales.total) as total
+                    from
+                        sales
+                        inner join customers on sales.idCliente = customers.id
+                    where
+                        YEAR(fecha)=YEAR(NOW())
+                    order by
+                        sales.id asc' )[0]->total;
+
+                $nombreDocumento = "ventas_{$tipo}_{$fecha}.pdf";
+                break;
+
+            case 'mensual':
+                $ventas = DB::select( 'select
+                        sales.id,
+                        customers.nombre as nombreCliente,
+                        sales.fecha,
+                        sales.total
+                    from
+                        sales
+                        inner join customers on sales.idCliente = customers.id
+                    where
+                        month(fecha) = month(current_date())
+                        and year(fecha) = year(fecha)
+                    order by
+                        sales.id asc' );
+
+                $total = DB::select( 'select
+                        sum(sales.total) as total
+                    from
+                        sales
+                        inner join customers on sales.idCliente = customers.id
+                    where
+                        month(fecha) = month(current_date())
+                        and year(fecha) = year(fecha)
+                    order by
+                        sales.id asc' )[0]->total;
+
+                $nombreDocumento = "ventas_{$tipo}_{$fecha}.pdf";
+                break;
+                        
+            case 'semanal':
+                $ventas = DB::select( 'select
+                        sales.id,
+                        customers.nombre as nombreCliente,
+                        sales.fecha,
+                        sales.total
+                    from
+                        sales
+                        inner join customers on sales.idCliente = customers.id
+                    where
+                        YEARWEEK(fecha)=YEARWEEK(NOW())
+                    order by
+                        sales.id asc' );
+
+                $total = DB::select( 'select
+                        sum(sales.total) as total
+                    from
+                        sales
+                        inner join customers on sales.idCliente = customers.id
+                    where
+                        YEARWEEK(fecha)=YEARWEEK(NOW())
+                    order by
+                        sales.id asc' )[0]->total;
+                $nombreDocumento = "ventas_{$tipo}_{$fecha}.pdf";
+                break;
+
+                case 'diario':
+                    $ventas = DB::select( 'select
+                            sales.id,
+                            customers.nombre as nombreCliente,
+                            sales.fecha,
+                            sales.total
+                        from
+                            sales
+                            inner join customers on sales.idCliente = customers.id
+                        where
+                            DATE(fecha) = CURDATE()
+                        order by
+                            sales.id asc' );
+    
+                    $total = DB::select( 'select
+                            sum(sales.total) as total
+                        from
+                            sales
+                            inner join customers on sales.idCliente = customers.id
+                        where
+                            DATE(fecha) = CURDATE()
+                        order by
+                            sales.id asc' )[0]->total;
+                    $nombreDocumento = "ventas_{$tipo}_{$fecha}.pdf";
+                    break;
+
+                case 'rango':
+                    // dd($request->fechaInicial);
+                    $fechaInicial = $request->fechaInicial;
+                    $fechaFinal = $request->fechaFinal;
+
+                    $ventas = DB::select( "select
+                            sales.id,
+                            customers.nombre as nombreCliente,
+                            sales.fecha,
+                            sales.total
+                        from
+                            sales
+                            inner join customers on sales.idCliente = customers.id
+                        where
+                            fecha between '{$fechaInicial}' and '{$fechaFinal}'
+                        order by
+                            sales.id asc");
+    
+                    $total = DB::select( "select
+                            sum(sales.total) as total
+                        from
+                            sales
+                            inner join customers on sales.idCliente = customers.id
+                        where
+                            fecha between '{$fechaInicial}' and '{$fechaFinal}'
+                        order by
+                            sales.id asc" )[0]->total;
+
+                    $nombreDocumento = "ventas_" . date('d/m/Y', strtotime($request->fechaInicial)) . "_" . date('d/m/Y', strtotime($request->fechaFinal)) . ".pdf";                            
+                    break;
+                
+            default:
+                return $this->volverAInicio('0');
+                break;
+        }
+
+        
+        if($ventas === [])
+            return $this->volverAInicio('0');
+
+        $datos = compact('ventas', 'total', 'fecha', 'tipo', 'fechaInicial', 'fechaFinal');
+
+        $pdf = PDF::loadView('ventas.reporte', $datos);
+        return $pdf->download($nombreDocumento);
+    }
+
 
     public function eliminar (Request $request) {
         if(!isset($request->id)) {

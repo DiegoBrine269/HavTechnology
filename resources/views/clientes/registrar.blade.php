@@ -10,7 +10,7 @@
 
         <div class="campo">
             <label for="rfc">RFC:</label>
-            <input required type="text" name="cliente[rfc]" id="rfc">
+            <input pattern="/^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/" required type="text" name="cliente[rfc]" id="rfc">
         </div>
 
         <div class="campo">
@@ -41,7 +41,7 @@
             <input required type="text" name="cliente[correo]" id="correo">
         </div>
 
-        <div class="campo">
+        <div class="campo-uno">
             <input class="boton boton-principal" type="submit" value="Registrar">
         </div>   
     </form>

@@ -1,7 +1,7 @@
 @extends('main')
 
 @section('content')    
-    <form action="/productos/registrar" class="formulario" method="POST">
+    <form action="/productos/registrar" class="formulario" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="campo">
             <label for="id">ID (SKU):</label>
@@ -10,6 +10,11 @@
         <div class="campo">
             <label for="nombre">Nombre:</label>
             <input required type="text" name="producto[nombre]" id="nombre">
+        </div>
+
+        <div class="campo">
+            <label for="imagen">Imagen:</label>
+            <input required type="file" name="imagen" id="imagen" accept="image/*">
         </div>
 
         <div class="campo">

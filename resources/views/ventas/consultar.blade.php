@@ -44,12 +44,12 @@
             <th class="capitalize">Precio de venta</th>
         </thead>
         <tbody>
-                @foreach ($productosUnicos as $productoUnico)
-                    <tr>
-                        <td> {{ $productoUnico->idUnico }} </td>
-                        <td> $ {{ $productoUnico->precioVenta }} </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+            @foreach ($productosUnicos as $productoUnico)
+                <tr>
+                    <td> {{ $productoUnico->idUnico }} </td>
+                    <td> $ {{ $productoUnico->precioVenta }} </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
 @stop

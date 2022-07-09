@@ -1,11 +1,11 @@
 .header {
     margin-top: 0;
-    background-color: var(--colorPrincipal);
+    background-color: rgb(224, 232, 72);
 }
 
 .header h1 {
     margin: 0;
-    color: var(--blanco);
+    color: var(--negro);
 }
 
 .contenido-header {

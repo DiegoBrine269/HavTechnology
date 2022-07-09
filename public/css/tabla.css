@@ -1,5 +1,11 @@
+.table-container {
+    overflow-x:scroll; 
+}
+
 .tabla {
+    overflow-x:auto;
     margin-top: 3rem;
+    max-width: 100%;
     width: 100%;
 }
 
@@ -27,4 +33,17 @@
 
 tbody tr:nth-child(odd){
     background-color: #dfdfdf;
+}
+
+.acciones {
+    display: flex;
+    flex-direction: column;  
+    justify-content: center;
+}
+
+@media (min-width: 1200px) {
+    .acciones {
+        flex-direction: row;
+        gap: 0.5rem;
+    }
 }

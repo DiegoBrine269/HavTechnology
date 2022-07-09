@@ -4,7 +4,7 @@
 }
 
 .invisible {
-    display: none;
+    display: none!important;
 }
 
 .visible {
@@ -17,4 +17,15 @@
 
 .capitalize {
     text-transform: capitalize; 
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.centrar-verticalmente {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
 }

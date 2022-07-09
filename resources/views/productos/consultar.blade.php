@@ -1,13 +1,40 @@
 @extends('main')
 
 @section('content')    
-    <form action="/productos/actualizar" class="formulario" method="POST">
+    <form action="/productos/actualizar" class="formulario" method="POST"  enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="producto[idOriginal]" value="{{ $producto->id }}">
 
         <div class="campo">
             <label for="nombre">Nombre:</label>
             <input value="{{ $producto->nombre }}" required type="text" name="producto[nombre]" id="nombre">
+        </div>
+
+        <div class="campo">
+            <label for="">Imagen:</label>
+            <img 
+                @if (!isset($producto->imagen))
+                    src="/img/default.png" 
+                @else
+                    src="/img/{{ $producto->imagen }}" 
+                @endif 
+                alt="Imagen de producto"
+            >
+            </div>
+        
+        <input 
+            type="hidden" 
+            name="imagenOriginal"
+            @if (!isset($producto->imagen))
+                value="" 
+            @else
+                value="/img/{{ $producto->imagen }}" 
+            @endif 
+        >
+
+        <div class="campo">
+            <label for="imagen">Nueva imagen:</label>
+            <input type="file" name="nuevaImagen" id="imagen">
         </div>
 
         <div class="campo">
@@ -25,10 +52,10 @@
             <input value="{{ $producto->precioVenta }}" required type="number" name="producto[precioventa]" id="precioventa">
         </div>
 
-        <div class="campo">
+        {{-- <div class="campo">
             <label for="stock">Stock:</label>
             <input value="{{ $producto->stock }}" required type="number" min="1" max="9999" name="producto[stock]" id="cantidad">
-        </div>
+        </div> --}}
         
         <div class="campo-dos">
             <input class="boton boton-principal" type="submit" value="Actualizar">
@@ -59,8 +86,8 @@
                         <td> {{ $productoUnico->lote }} </td>
                         <td> {{ $productoUnico->nombre }} </td>
                         <td class="acciones">
-                            <a href="">Quitar existencia</a>
-                            <a href="">Eliminar</a>
+                            <a href="/producto-unico/eliminar?id={{ $productoUnico->idUnico }}">Eliminar</a>
+                            <a href="/productos/barcode?id={{ $productoUnico->idUnico }}">Generar código</a>
                         </td>
                     </tr>
                 @endforeach

@@ -23,6 +23,8 @@ Route::get('/productos/consultar', 'App\Http\Controllers\ProductsController@cons
 Route::get('/productos/actualizar', 'App\Http\Controllers\ProductsController@consultar');
 Route::post('/productos/actualizar', 'App\Http\Controllers\ProductsController@consultar');
 Route::get('/productos/eliminar', 'App\Http\Controllers\ProductsController@eliminar');
+Route::get('/producto-unico/eliminar', 'App\Http\Controllers\ProductsController@productoUnicoEliminar');
+Route::get('/productos/barcode', 'App\Http\Controllers\ProductsController@barcode');
 
 //Rutas para proveedores
 Route::get('/proveedores', 'App\Http\Controllers\ProvidersController@index');
@@ -51,3 +53,16 @@ Route::get('/ventas/actualizar', 'App\Http\Controllers\SalesController@consultar
 Route::post('/ventas/actualizar', 'App\Http\Controllers\SalesController@consultar');
 Route::get('/ventas/eliminar', 'App\Http\Controllers\SalesController@eliminar');
 Route::get('/consultar-precio', 'App\Http\Controllers\SalesController@consultarPrecio');
+Route::get('/ventas/reporte', 'App\Http\Controllers\SalesController@reporte');
+
+//Rutas para devoluciones
+Route::get('/devoluciones', 'App\Http\Controllers\RefundsController@index');
+Route::get('/devoluciones/registrar', 'App\Http\Controllers\RefundsController@registrar');
+Route::post('/devoluciones/registrar', 'App\Http\Controllers\RefundsController@registrar');
+Route::get('/devoluciones/consultar', 'App\Http\Controllers\RefundsController@consultar');
+Route::get('/devoluciones/actualizar', 'App\Http\Controllers\RefundsController@consultar');
+Route::post('/devoluciones/actualizar', 'App\Http\Controllers\RefundsController@consultar');
+Route::get('/devoluciones/eliminar', 'App\Http\Controllers\RefundsController@eliminar');
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

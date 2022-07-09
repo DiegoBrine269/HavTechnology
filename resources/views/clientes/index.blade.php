@@ -37,7 +37,7 @@
                         <div class="acciones">
                             <a href="/{{ strtolower($titulo) }}/consultar?id={{ $dato->id }}">Consultar</a>
                             <a href="/{{ strtolower($titulo) }}/actualizar?id={{ $dato->id }}">Actualizar</a>
-                            <a href="/{{ strtolower($titulo) }}/eliminar?id={{ $dato->id }}">Eliminar</a>
+                            <a onclick="return confirm('¿Seguro que desea eliminar el registro?')" href="/{{ strtolower($titulo) }}/eliminar?id={{ $dato->id }}">Eliminar</a>
                         </div>
                     </td>
                 </tr>

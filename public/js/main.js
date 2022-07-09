@@ -28,10 +28,15 @@ function buscarCoincidencias () {
             const atributos = registro.querySelectorAll('td');
 
             atributos.forEach(a => {
-                // Oculto el registro de manera condicional
-                if (a.innerText.toLowerCase().includes(palabraClave.toLowerCase() )) {
-                    ocultar = false;
-                }  
+                //Si es el td de acciones, lo oculto
+                if(atributos[atributos.length - 1] == a){
+                    console.log('td actions');
+                }
+                else {
+                    // Oculto el registro de manera condicional
+                    if (a.innerText.toLowerCase().includes(palabraClave.toLowerCase())) 
+                        ocultar = false;
+                }
             });
 
             if(ocultar) {

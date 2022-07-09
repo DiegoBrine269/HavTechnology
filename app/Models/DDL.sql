@@ -3,106 +3,102 @@ CREATE DATABASE havtechnology;
 
 USE havtechnology;
 
-  
-
-CREATE TABLE Producto (
+CREATE TABLE products (
 	id VARCHAR(20),
     nombre VARCHAR(40),
     descripcion TEXT,
     color VARCHAR(20),
-    lote INT,
-    stock INT
+    stock INT,
+    precioVenta DECIMAL(5, 2)
 );
+ALTER TABLE products
+ADD COLUMN imagen VARCHAR(100) AFTER id;
 
-ALTER TABLE Producto
-ADD CONSTRAINT pk_producto PRIMARY KEY (id);
+ALTER TABLE products
+ADD CONSTRAINT pk_product PRIMARY KEY (id);
 
-INSERT INTO Producto VALUES('123', 'Producto', 'Bla bla bla', 'azul', 1, 1);
-
-CREATE TABLE ProductoUnico(
+DROP TABLE unique_products;
+CREATE TABLE unique_products (
 	id VARCHAR(20),
     idUnico VARCHAR(30),
     existe BOOLEAN,
-	idProveedor INT(10)
+	idProveedor INT(10),
+    lote INT(4)
 );
 
-ALTER TABLE ProductoUnico
-ADD CONSTRAINT pk_producto_unico PRIMARY KEY (idUnico);
+ALTER TABLE unique_products
+ADD CONSTRAINT pk_unique_products PRIMARY KEY (idUnico);
 
-ALTER TABLE ProductoUnico
-ADD CONSTRAINT fk_producto_unico FOREIGN KEY (id) REFERENCES Producto(id);
+ALTER TABLE unique_products
+ADD CONSTRAINT fk_unique_product FOREIGN KEY (id) REFERENCES products(id);
 
-ALTER TABLE ProductoUnico
-ADD CONSTRAINT fk_producto_unico_proveedor FOREIGN KEY (idProveedor) REFERENCES Proveedor(id);
+ALTER TABLE unique_products
+ADD CONSTRAINT fk_unique_product_provider FOREIGN KEY (idProveedor) REFERENCES providers(id);
 
-CREATE TABLE Proveedor (
+DROP TABLE providers;
+CREATE TABLE providers (
 	id INT(10) AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(40),
     telefono CHAR(10),
-    correo VARCHAR(30)
+    correo VARCHAR(100)
 );
 
-CREATE TABLE Cliente (
+CREATE TABLE customers (
     id INT(10) AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(40),
     RFC CHAR(13),
-    dirFiscal VARCHAR(100),
+    dirFiscal VARCHAR(200),
     CP CHAR(5),
-    usoCFDI INT(1),
-    correo VARCHAR(30)
+    usoCFDI CHAR(3),
+    correo VARCHAR(100)
 );
 
 /*ALTER TABLE Cliente
 ADD CONSTRAINT pk_cliente PRIMARY KEY (id);*/
 
-
-CREATE TABLE Venta (
+CREATE TABLE sales (
 	id INT(10) AUTO_INCREMENT PRIMARY KEY,
     idCliente INT(10),
     fecha DATE,
 	total DECIMAL(10, 2)
 );
 
-/*ALTER TABLE Venta
-ADD CONSTRAINT pk_venta PRIMARY KEY (id);*/
+ALTER TABLE sales
+ADD CONSTRAINT fk_sales_customers FOREIGN KEY (idCliente) REFERENCES customers(id);
 
-ALTER TABLE Venta
-ADD CONSTRAINT fk_venta_cliente FOREIGN KEY (idCliente) REFERENCES Cliente(id);
-
-DROP TABLE VentaProducto;
-CREATE TABLE VentaProducto (
+DROP TABLE sales_products;
+CREATE TABLE sales_products(
 	idVenta INT(10),
-    idProducto VARCHAR(20), /*idUnico*/
+    idProducto VARCHAR(30), /*idUnico*/
     cantidad INT(3)
 );
 
-ALTER TABLE VentaProducto
-ADD CONSTRAINT pk_venta_producto PRIMARY KEY (idVenta, idProducto);
-
-ALTER TABLE VentaProducto
-ADD CONSTRAINT fk_venta_producto_venta FOREIGN KEY (idVenta) REFERENCES Venta(id);
+ALTER TABLE sales_products
+ADD CONSTRAINT pk_sales_products PRIMARY KEY (idVenta, idProducto);
 
 ALTER TABLE sales_products
-ADD CONSTRAINT fk_venta_producto_producto FOREIGN KEY (idProducto) REFERENCES unique_products(idUnico);
+ADD CONSTRAINT fk_sales_products_sale FOREIGN KEY (idVenta) REFERENCES sales(id);
 
+ALTER TABLE sales_products
+ADD CONSTRAINT fk_sales_products_product FOREIGN KEY (idProducto) REFERENCES unique_products(idUnico);
 
-CREATE TABLE Devolucion (
+DROP TABLE refunds;
+CREATE TABLE refunds (
 	id INT(10) AUTO_INCREMENT PRIMARY KEY,
-    idVenta INT(10),
+    idProducto VARCHAR(30),
+    fecha DATE,
     perdidaTotal BOOLEAN
 );
 
-/*ALTER TABLE Devolucion
-ADD CONSTRAINT pk_devolucion PRIMARY KEY (id);*/
+ALTER TABLE refunds
+ADD CONSTRAINT fk_refund_product FOREIGN KEY (idProducto) REFERENCES unique_products(idUnico);
 
-ALTER TABLE Devolucion
-ADD CONSTRAINT fk_devolucion_venta FOREIGN KEY (idVenta) REFERENCES Venta(id);
-
+DROP TABLE uso_cfdi;
 CREATE TABLE uso_cfdi (
-	id CHAR(3),
+	id CHAR(3) PRIMARY KEY,
     descripcion VARCHAR (100)
 );
 
-ALTER TABLE Customers
+ALTER TABLE customers
 ADD CONSTRAINT fk_uso_cfdi FOREIGN KEY (usoCFDI) REFERENCES uso_cfdi(id);
 
