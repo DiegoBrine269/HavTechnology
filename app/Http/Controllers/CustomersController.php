@@ -5,9 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Models\UsoCfdi;
 use Illuminate\Http\Request;
+use Exception;
 
 class CustomersController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     private function volverAInicio($resultado = ''){
         $resultado = '?resultado=' . $resultado;
         return redirect('/clientes' . $resultado );
@@ -30,64 +36,70 @@ class CustomersController extends Controller
 
     //Consulta y actualiza
     public function consultar (Request $request) {
+        try {
+            //Envío de formulario para actualizar producto
+            if($request->isMethod('post')){
+                
+                Customer::where('id', $request->cliente['id'])->update([
+                    'nombre' => $request->cliente['nombre'],
+                    'rfc' => $request->cliente['rfc'],
+                    'dirfiscal' => $request->cliente['dirfiscal'],
+                    'cp' => $request->cliente['cp'],
+                    'usocfdi' => $request->cliente['usocfdi'],
+                    'correo' => $request->cliente['correo']
+                ]);      
 
-        //Envío de formulario para actualizar producto
-        if($request->isMethod('post')){
-            
-            Customer::where('id', $request->cliente['id'])->update([
-                'nombre' => $request->cliente['nombre'],
-                'rfc' => $request->cliente['rfc'],
-                'dirfiscal' => $request->cliente['dirfiscal'],
-                'cp' => $request->cliente['cp'],
-                'usocfdi' => $request->cliente['usocfdi'],
-                'correo' => $request->cliente['correo']
-            ]);      
-
-            return $this->volverAInicio('2');
-        }
-        //Petición GET para mostrar el formulario
-        else if($request->isMethod('get')) {
-            if(!isset($request->id)) {
-                return redirect('/clientes');;
+                return $this->volverAInicio('2');
             }
+            //Petición GET para mostrar el formulario
+            else if($request->isMethod('get')) {
+                if(!isset($request->id)) {
+                    return redirect('/clientes');;
+                }
 
-            $cliente = Customer::find($request->id);    
-            $usosCFDI = UsoCfdi::all();
+                $cliente = Customer::find($request->id);    
+                $usosCFDI = UsoCfdi::all();
 
-            // dd($usosCFDI);
+                // dd($usosCFDI);
 
-            return view('clientes/consultar', [
-                'cliente' => $cliente,
-                'titulo' => 'Consultar cliente ' . $request->id,
-                'usosCFDI' => $usosCFDI
-            ]);
+                return view('clientes/consultar', [
+                    'cliente' => $cliente,
+                    'titulo' => 'Consultar cliente ' . $request->id,
+                    'usosCFDI' => $usosCFDI
+                ]);
+            }
+        } catch (Exception $exception) {
+            return $this->volverAInicio('0');
         }
     }
 
     public function registrar (Request $request) {
-
-        if($request->isMethod('post')) { 
-            $nuevoCliente = new Customer();
-
-            $nuevoCliente->nombre = $request->cliente['nombre'];
-            $nuevoCliente->rfc = $request->cliente['rfc'];
-            $nuevoCliente->dirFiscal = $request->cliente['dirfiscal'];
-            $nuevoCliente->cp = $request->cliente['cp'];
-            $nuevoCliente->usoCFDI = $request->cliente['usocfdi'];
-            $nuevoCliente->correo = $request->cliente['correo'];
-            
-            $nuevoCliente->save();
-
-            return $this->volverAInicio('1');
-
-        } else if($request->isMethod('get')) {
-
-            $usosCFDI = UsoCfdi::all();
-
-            return view('clientes/registrar', [
-                'titulo' => 'Registrar nuevo cliente',
-                'usosCFDI' => $usosCFDI 
-            ]);
+        try {
+            if($request->isMethod('post')) { 
+                $nuevoCliente = new Customer();
+    
+                $nuevoCliente->nombre = $request->cliente['nombre'];
+                $nuevoCliente->rfc = $request->cliente['rfc'];
+                $nuevoCliente->dirFiscal = $request->cliente['dirfiscal'];
+                $nuevoCliente->cp = $request->cliente['cp'];
+                $nuevoCliente->usoCFDI = $request->cliente['usocfdi'];
+                $nuevoCliente->correo = $request->cliente['correo'];
+                
+                $nuevoCliente->save();
+    
+                return $this->volverAInicio('1');
+    
+            } else if($request->isMethod('get')) {
+    
+                $usosCFDI = UsoCfdi::all();
+    
+                return view('clientes/registrar', [
+                    'titulo' => 'Registrar nuevo cliente',
+                    'usosCFDI' => $usosCFDI 
+                ]);
+            } 
+        } catch (Exception $exception) {
+            return $this->volverAInicio('0');
         }
     }
 
@@ -96,7 +108,11 @@ class CustomersController extends Controller
             return redirect('/clientes');
         }
 
-        Customer::where('id','=', $request->id)->delete();
+        try {
+            Customer::where('id','=', $request->id)->delete();
+        } catch (Exception $exception) {
+            return $this->volverAInicio('0');
+        }
 
         return $this->volverAInicio('3');
     }

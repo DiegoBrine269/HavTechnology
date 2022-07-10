@@ -86,8 +86,8 @@
                         <td> {{ $productoUnico->lote }} </td>
                         <td> {{ $productoUnico->nombre }} </td>
                         <td class="acciones">
-                            <a href="/producto-unico/eliminar?id={{ $productoUnico->idUnico }}">Eliminar</a>
-                            <a href="/productos/barcode?id={{ $productoUnico->idUnico }}">Generar código</a>
+                            <a class="fa-solid fa-trash-can" href="/producto-unico/eliminar?id={{ $productoUnico->idUnico }}"></a>
+                            <a class="fa-solid fa-barcode" href="/productos/barcode?id={{ $productoUnico->idUnico }}"></a>
                         </td>
                     </tr>
                 @endforeach

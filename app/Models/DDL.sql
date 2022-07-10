@@ -102,3 +102,26 @@ CREATE TABLE uso_cfdi (
 ALTER TABLE customers
 ADD CONSTRAINT fk_uso_cfdi FOREIGN KEY (usoCFDI) REFERENCES uso_cfdi(id);
 
+SHOW CREATE TABLE users;
+
+CREATE TABLE `users` (
+   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+   `email_verified_at` timestamp NULL DEFAULT NULL,
+   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+   `is_admin` tinyint(1) NOT NULL DEFAULT '0',
+   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+   `created_at` timestamp NULL DEFAULT NULL,
+   `updated_at` timestamp NULL DEFAULT NULL,
+   PRIMARY KEY (`id`),
+   UNIQUE KEY `users_email_unique` (`email`)
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+ 
+ 
+CREATE TABLE `password_resets` (
+   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+   `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+   `created_at` timestamp NULL DEFAULT NULL,
+   KEY `password_resets_email_index` (`email`)
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci

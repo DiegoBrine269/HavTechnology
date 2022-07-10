@@ -11,7 +11,7 @@
 
         <div class="campo">
             <label for="rfc">RFC:</label>
-            <input value="{{ $cliente->RFC }}" required type="text" name="cliente[rfc]" id="rfc">
+            <input value="{{ $cliente->RFC }}" required type="text" name="cliente[rfc]" id="rfc" pattern="[A-ZÑ&]{3,4}\d{6}[A-V1-9][A-Z1-9][0-9A]">
         </div>
 
         <div class="campo">
@@ -42,7 +42,7 @@
 
         <div class="campo">
             <label for="color">Correo</label>
-            <input value="{{ $cliente->correo }}" required type="text" name="cliente[correo]" id="correo">
+            <input value="{{ $cliente->correo }}" required type="text" name="cliente[correo]" id="correo" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
         </div>
         
         <div class="campo-dos">

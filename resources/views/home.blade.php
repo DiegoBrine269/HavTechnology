@@ -1,23 +1,11 @@
-@extends('layouts.app')
+@extends('main')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection
+    <h2>Bienvenido, {{ Auth::user()->name }}.</h2>
+    @if (Auth::user()->is_admin == '1')
+        <p>Rol: <span class="bold">Administrador</span></p>            
+    @else
+        <p>Rol: <span class="bold">Empleado</span></p>
+    @endif
+    <p>Seleccione una opción del menú de navegación para comenzar a trabajar</p>
+@stop

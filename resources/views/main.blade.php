@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title> {{ ucfirst($titulo) }} </title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
     <link rel="stylesheet" href="{{ url('/css/index.css') }}">
 </head>
@@ -12,7 +14,7 @@
 
     <header class="header">
         <div class="contenedor contenido-header">
-            <h1>HAVTechnology</h1>
+            <h1>HAV Technology</h1>
         </div>
     </header>
 
@@ -24,9 +26,22 @@
                 <li><a href="/clientes" class="menu-item">Clientes</a></li>
                 <li><a href="/ventas" class="menu-item">Ventas</a></li>
                 <li><a href="/devoluciones" class="menu-item">Devoluciones</a></li>
-                <li><a href="" class="menu-item">Cerrar Sesión</a></li>
+                {{-- <li><a href="" class="menu-item">Cerrar Sesión</a></li> --}}
+                <li>
+                    <a class="dropdown-item menu-item" href="{{ route('logout') }}"
+                        onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">
+                        {{ __('Cerrar Sesión') }}
+                    </a>
+                </li>
+
             </ul>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
         </div>
+
+
         
         <div class="contenido-principal"> 
             <h2>{{ ucfirst($titulo) }}</h2>

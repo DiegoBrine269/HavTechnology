@@ -11,6 +11,7 @@
             <a href="/{{ strtolower($titulo) }}/registrar-entrada" class="boton">Entrada de producto existente</a>
         </div>
     </div>
+    
     <div class="table-container">
         <table class="tabla" cellspacing="0">
             <thead>
@@ -45,10 +46,10 @@
                         <td> {{ $dato->stock }} </td>
                         <td>
                             <div class="acciones">
-                                <a href="/{{ strtolower($titulo) }}/consultar?id={{ $dato->id }}">Consultar</a>
-                                <a href="/{{ strtolower($titulo) }}/actualizar?id={{ $dato->id }}">Actualizar</a>
-                                <a onclick="return confirm('¿Seguro que desea eliminar el registro?')" href="/{{ strtolower($titulo) }}/eliminar?id={{ $dato->id }}">Eliminar</a>
-                                <a href="/{{ strtolower($titulo) }}/barcode?id={{ $dato->id }}">Generar código</a>
+                                <a class="fa-solid fa-eye" href="/{{ strtolower($titulo) }}/consultar?id={{ $dato->id }}"></a>
+                                <a class="fa-solid fa-pen-to-square" href="/{{ strtolower($titulo) }}/actualizar?id={{ $dato->id }}"></a>
+                                <a class="fa-solid fa-trash-can" onclick="return confirm('¿Seguro que desea eliminar el registro?')" href="/{{ strtolower($titulo) }}/eliminar?id={{ $dato->id }}"></a>
+                                <a class="fa-solid fa-barcode" href="/{{ strtolower($titulo) }}/barcode?id={{ $dato->id }}"></a>
                             </div>
                         </td>
                     </tr>

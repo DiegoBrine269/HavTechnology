@@ -1,5 +1,11 @@
 .sidebar .menu{
     text-align: center;
+    display: flex;
+}
+
+.sidebar {
+    overflow-x:scroll; 
+    /* overflow: hidden; */
 }
 
 @media (min-width: 768px) {
@@ -32,6 +38,7 @@
     color: var(--negro);
     padding: 1rem;
     display: block;
+    white-space: nowrap;
 }
 
 .menu-item:hover {

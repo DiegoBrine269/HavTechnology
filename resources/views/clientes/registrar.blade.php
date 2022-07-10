@@ -1,7 +1,8 @@
 @extends('main')
 
 @section('content')    
-    <form action="/clientes/registrar" class="formulario" method="POST">
+    <div id="resultado" class="mensaje mensaje-error invisible"></div>
+    <form id="form_registrar" action="/clientes/registrar" class="formulario" method="POST">
         @csrf
         <div class="campo">
             <label for="nombre">Nombre:</label>
@@ -10,7 +11,7 @@
 
         <div class="campo">
             <label for="rfc">RFC:</label>
-            <input pattern="/^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/" required type="text" name="cliente[rfc]" id="rfc">
+            <input required type="text" name="cliente[rfc]" id="rfc_input" pattern="[A-ZÑ&]{3,4}\d{6}[A-V1-9][A-Z1-9][0-9A]">
         </div>
 
         <div class="campo">
@@ -20,7 +21,7 @@
 
         <div class="campo">
             <label for="cp">C.P:</label>
-            <input required type="number" name="cliente[cp]" id="cp">
+            <input required type="number" name="cliente[cp]" id="cp" maxlength="5">
         </div>
 
         <div class="campo">
@@ -38,11 +39,13 @@
 
         <div class="campo">
             <label for="color">Correo</label>
-            <input required type="text" name="cliente[correo]" id="correo">
+            <input required type="email" name="cliente[correo]" id="correo" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
         </div>
 
         <div class="campo-uno">
             <input class="boton boton-principal" type="submit" value="Registrar">
         </div>   
     </form>
+
+    <script src="/js/cliente.js"></script>
 @stop
