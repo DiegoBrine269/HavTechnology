@@ -12,10 +12,11 @@ use App\Models\SalesProduct;
 use Illuminate\Http\Request;
 use App\Models\UniqueProduct;
 use Illuminate\Support\Facades\DB;
-
 use Illuminate\Support\Facades\File;
 use function PHPUnit\Framework\isNull;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
+
 
 class ProductsController extends Controller {
     public function __construct()
@@ -294,7 +295,11 @@ class ProductsController extends Controller {
 
     public function catalogo () {
         $productos = Product::orderBy('id')->get();
-        $datos = compact('productos');
+
+        $fecha = Carbon::now();
+        $fecha = $fecha->formatLocalized('%d de %B de %Y');
+
+        $datos = compact('productos', 'fecha');
 
         $pdf = PDF::loadView('productos.catalogo', $datos);
         return $pdf->stream('HAV Technology - Catálogo de productos.pdf');

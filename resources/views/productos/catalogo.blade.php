@@ -37,6 +37,10 @@
             /* padding-bottom: 40px; */
         }
         
+        .alinear-derecha {
+            text-align: right;
+        }
+
         .titulo h4, .domicilio, .titulo h2 {
             margin: 0;
         }  
@@ -73,7 +77,7 @@
         }
 
         .tabla {
-            margin-top: 30px;
+            margin-top: 10px;
             max-width: 100%;
             width: 100%;
             font-size: 12px;
@@ -125,6 +129,20 @@
             height: 70px;
         }
 
+        .aviso {
+            font-size: 10px;
+        }
+
+        .aviso-1{
+            margin-top: 30px;
+            color: rgb(209, 24, 24);
+            margin-bottom: 0;
+        }
+
+        .aviso-2 {
+            color: rgb(44, 49, 134);
+        }
+
     </style>
 </head>
 <body>
@@ -142,11 +160,14 @@
                 <td class="informacion">
                     <p>RFC: LECH860130NU8</p>
                     <p>Horacio Lechuga Castillo</p>
+                    <p>Ciudad de México, a <span>{{ $fecha }}</span></p>
                 </td>
             </tr> 
         </table>
     </header>
 
+    <p class="alinear-derecha aviso aviso-1">*Precio sujeto a cambios sin previo aviso</p>
+    <div class="alinear-derecha aviso aviso-2">**Precio disponible en el mes de exhibición</div>
     <div class="table-container" cellspacing="0" cellpadding="0">
         <table class="tabla">
             <thead>
@@ -173,10 +194,14 @@
                             </td>
                             <td>{{ $producto->descripcion }}</td>
                             <td>{{ $producto->color }}</td>
-                            <td>$ {{ $producto->precioVenta }}</td>
+                            <td class="precio">
+                                * ** ${{ $producto->precioVenta }}
+                            </td>
                             <td>
                                 @if ($producto->stock < $producto->cantidadMinima)
                                     Preguntar por existencias                                    
+                                @else
+                                    En existencia
                                 @endif
                             </td>
                         </tr>
