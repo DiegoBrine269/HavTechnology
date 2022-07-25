@@ -16,7 +16,7 @@
         }
 
         header {
-            height: 120px;
+            height: 70px;
             margin-top: 0;
             padding-top: 0;
         }
@@ -25,7 +25,7 @@
             font-size: 14px;
             width: 100%;
             background-color: #ffffff;
-            height: 120px;
+            height: 70px;
             margin-top: 0;
             padding-top: 0;
         }
@@ -50,7 +50,7 @@
         }
 
         .encabezado tr {
-            max-height: 120px;
+            max-height: 70px;
             /* padding: 40px; */
         }
 
@@ -69,11 +69,11 @@
         }
     
         .table-container { 
-            overflow-x:auto;
+            /* overflow-x:auto; */
         }
 
         .tabla {
-            margin-top: 10px;
+            margin-top: 30px;
             max-width: 100%;
             width: 100%;
             font-size: 12px;
@@ -89,7 +89,7 @@
 
         .tabla td {
             text-align: center;
-
+            padding: 0 10px;
         }
 
         .tabla td img {
@@ -122,6 +122,7 @@
         .logo {
             width: 70px;
             display: inline;
+            height: 70px;
         }
 
     </style>
@@ -135,16 +136,12 @@
                 </td>
                 <td class="titulo">
                     <h4>HAV Technology</h4>
-                    <p class="domicilio">Calle Colima MZ 22, Lote 17, Col. Buenavista, C.P. 09700, Alcaldía Iztapalapa, CDMX</p>
-                    @if ($tipo === 'rango')
-                        <h2 style="font-size:16px;">Reporte de ventas del {{ date("d/m/Y", strtotime($fechaInicial)) }} a {{ date("d/m/Y", strtotime($fechaFinal)) }}</h2>
-                    @else
-                        <h2>Reporte {{ $tipo }} de ventas</h2>            
-                    @endif 
+                    <p class="domicilio">Calle Colima, MZ 22, Lote 17, Col. Buenavista, C.P. 09700, Alcaldía Iztapalapa, CDMX</p>
+                    <h2>Catálogo de productos</h2>
                 </td>
                 <td class="informacion">
                     <p>RFC: LECH860130NU8</p>
-                    <p>Documento generado el: <span>{{ $fecha }}</span></p>
+                    <p>Horacio Lechuga Castillo</p>
                 </td>
             </tr> 
         </table>
@@ -153,31 +150,43 @@
     <div class="table-container" cellspacing="0" cellpadding="0">
         <table class="tabla">
             <thead>
-                <th>ID</th>
-                <th>Cliente</th>
-                <th>Fecha</th>
-                <th>Total</th>
+                <th>Nombre</th>
+                <th>Imagen</th>
+                <th>Descripcion</th>
+                <th>Color</th>
+                <th style="width:100px">Precio</th>
+                <th>Detalles</th>
             </thead>
             <tbody>
-                @foreach ($ventas as $venta)
-                    <tr>
-                        <td> {{ $venta->id }} </td>
-                        <td> {{ $venta->nombreCliente }} </td>
-                        <td> 
-                            @php
-                                $date = date_create($venta->fecha);
-                            @endphp
-                            {{ date_format($date, 'd/m/Y') }} 
-                        </td>
-                        <td> $ {{ $venta->total }} </td>
-                    </tr>
+                @foreach ($productos as $producto)
+                    @if ($producto->stock > 0)
+                        <tr>
+                            <td> {{ $producto->nombre }} </td>
+                            <td>
+                                <img 
+                                    @if (!isset($producto->imagen))
+                                        src="{{public_path("img")}}/default.png" 
+                                    @else
+                                        src="{{public_path("img")}}/{{ $producto->imagen }}" 
+                                    @endif
+                                >  
+                            </td>
+                            <td>{{ $producto->descripcion }}</td>
+                            <td>{{ $producto->color }}</td>
+                            <td>$ {{ $producto->precioVenta }}</td>
+                            <td>
+                                @if ($producto->stock < $producto->cantidadMinima)
+                                    Preguntar por existencias                                    
+                                @endif
+                            </td>
+                        </tr>
+                    @endif
                 @endforeach
             </tbody>
         </table>
     </div>
 
     <footer>
-        <p>Total: <span class="bold">$ {{ $total }}</span></p>
     </footer>
 </body>
 </html>

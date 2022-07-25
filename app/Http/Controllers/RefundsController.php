@@ -10,7 +10,6 @@ use Exception;
 
 class RefundsController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -79,7 +78,6 @@ class RefundsController extends Controller
         } catch (Exception $exception) {
             return $this->volverAInicio('0');
         }
-        
     }
 
     private function quitarSufijoId($id) {

@@ -5,7 +5,7 @@ USE havtechnology;
 
 CREATE TABLE products (
 	id VARCHAR(20),
-    nombre VARCHAR(40),
+    nombre VARCHAR(200),
     descripcion TEXT,
     color VARCHAR(20),
     stock INT,
@@ -13,6 +13,13 @@ CREATE TABLE products (
 );
 ALTER TABLE products
 ADD COLUMN imagen VARCHAR(100) AFTER id;
+
+ALTER TABLE products
+ADD COLUMN costo DECIMAL(5, 2) AFTER precioVenta;
+
+ALTER TABLE products
+ADD COLUMN cantidadMinima INT AFTER stock;
+
 
 ALTER TABLE products
 ADD CONSTRAINT pk_product PRIMARY KEY (id);
@@ -124,4 +131,31 @@ CREATE TABLE `password_resets` (
    `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
    `created_at` timestamp NULL DEFAULT NULL,
    KEY `password_resets_email_index` (`email`)
- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP TABLE estimates;
+CREATE TABLE estimates (
+	id CHAR(16) PRIMARY KEY,
+    nombreCliente VARCHAR(200),
+    correo VARCHAR(100),
+    fechaValidez DATE,
+    envio BOOL
+);
+
+DROP TABLE estimates_products;
+CREATE TABLE estimates_products (
+	idPresupuesto CHAR(16) NULL,
+    idProducto VARCHAR(20) NULL,
+    cantidad INT
+);
+
+ALTER TABLE estimates_products
+ADD CONSTRAINT pk_estimates_products PRIMARY KEY (idPresupuesto, idProducto);
+
+ALTER TABLE estimates_products
+ADD CONSTRAINT fk_estimates FOREIGN KEY (idPresupuesto) REFERENCES estimates(id);
+
+ALTER TABLE estimates_products
+ADD CONSTRAINT fk_estimates_products FOREIGN KEY (idProducto) REFERENCES products(id);
+
+

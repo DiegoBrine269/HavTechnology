@@ -1,3 +1,4 @@
+-- SQLBook: Code
 /*Join de ventas*/
 USE havtechnology;
 

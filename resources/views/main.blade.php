@@ -8,6 +8,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+    <link rel="icon" href="{{ url('/css/logo.jpg') }}">    
     <link rel="stylesheet" href="{{ url('/css/index.css') }}">
 </head>
 <body>
@@ -26,6 +27,7 @@
                 <li><a href="/clientes" class="menu-item">Clientes</a></li>
                 <li><a href="/ventas" class="menu-item">Ventas</a></li>
                 <li><a href="/devoluciones" class="menu-item">Devoluciones</a></li>
+                <li><a href="/presupuestos" class="menu-item">Presupuestos</a></li>
                 {{-- <li><a href="" class="menu-item">Cerrar Sesión</a></li> --}}
                 <li>
                     <a class="dropdown-item menu-item" href="{{ route('logout') }}"
@@ -45,8 +47,6 @@
         
         <div class="contenido-principal"> 
             <h2>{{ ucfirst($titulo) }}</h2>
-
-
             @if (isset($resultado))
                 @switch($resultado )
                     @case('0')

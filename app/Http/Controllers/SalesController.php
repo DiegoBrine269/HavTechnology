@@ -63,10 +63,8 @@ class SalesController extends Controller
                 }
                 
                 //  Ahora sí, guardamos todo
-    
                 //Guarda en tabla de ventas
                 $nuevaVenta->save();    
-                
                 // Guarda por cada producto, un registro en sales_products
                 foreach ($idProductos as $id) {
                     $nuevaVentaProducto = new SalesProduct();
@@ -76,12 +74,24 @@ class SalesController extends Controller
     
                     $nuevaVentaProducto->save();
                 }
-    
+
+                
                 //Cambia la existencia de cada producto único
                 foreach ($idProductos as $id) {
                     UniqueProduct::where('idUnico', $id)->update([
                         'existe' => '0'
                     ]);
+
+                    //ID sin sufijo del producto
+                    $id = $this->quitarSufijoId($id);
+                    $producto = Product::find($id);
+
+                    //Decremento el stock
+                    Product::where('id', $id)->update([
+                        'stock' => $producto->stock - 1
+                    ]);     
+                    // dd($producto);   
+                    
                 }
     
                 return $this->volverAInicio('1');
@@ -305,9 +315,13 @@ class SalesController extends Controller
         $datos = compact('ventas', 'total', 'fecha', 'tipo', 'fechaInicial', 'fechaFinal');
 
         $pdf = PDF::loadView('ventas.reporte', $datos);
-        return $pdf->download($nombreDocumento);
+        return $pdf->stream($nombreDocumento);
     }
 
+    private function quitarSufijoId($id) {
+        $id = substr($id, 0, -5);
+        return $id;
+    }
 
     public function eliminar (Request $request) {
         if(!isset($request->id)) {

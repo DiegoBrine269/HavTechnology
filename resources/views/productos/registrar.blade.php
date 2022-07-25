@@ -33,6 +33,11 @@
         </div>
 
         <div class="campo">
+            <label for="precioventa">Costo:</label>
+            <input required type="number" min="1" max="99999" name="producto[costo]" id="costo">
+        </div>
+
+        <div class="campo">
             <label for="lote">Lote:</label>
             <input required type="number" min="1" max="99999" name="producto[lote]" id="lote">
         </div>
@@ -40,6 +45,11 @@
         <div class="campo">
             <label for="stock">Cantidad que ingresa:</label>
             <input required type="number" min="1" max="99999" name="producto[stock]" id="cantidad">
+        </div>
+
+        <div class="campo">
+            <label for="stock">Cantidad mínima:</label>
+            <input required type="number" min="1" max="99999" name="producto[cantidadMinima]" id="cantidadMinima">
         </div>
         
         <div class="campo">

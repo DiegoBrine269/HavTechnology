@@ -83,3 +83,15 @@ a.fa-barcode {
         margin-bottom: 0;
     } */
 }
+
+.productos-escasos {
+    margin-top: 1rem;
+    border: 2px solid #700000;
+    color: #700000;
+}
+
+@media (min-width: 768px) {
+    .productos-escasos {
+        max-width: 50%;
+    }
+}

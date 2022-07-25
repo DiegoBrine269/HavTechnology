@@ -1,7 +1,7 @@
 @extends('main')
 
 @section('content')
-    <h2>Bienvenido, {{ Auth::user()->name }}.</h2>
+    <h2>Bienvenid@, {{ Auth::user()->name }}.</h2>
     @if (Auth::user()->is_admin == '1')
         <p>Rol: <span class="bold">Administrador</span></p>            
     @else

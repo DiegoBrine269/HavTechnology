@@ -9,9 +9,20 @@
         <div class="opciones">
             <a href="/{{ strtolower($titulo) }}/registrar" class="boton">Registrar nuevo</a>
             <a href="/{{ strtolower($titulo) }}/registrar-entrada" class="boton">Entrada de producto existente</a>
+            <a href="/producto-unico/consultar" class="boton">Consultar status de producto único</a>
+            <a href="/{{ strtolower($titulo) }}/catalogo" class="boton">Descargar catálogo</a>
         </div>
     </div>
     
+    @if (count($productosEscasos) > 0)
+        <select class="productos-escasos" name="" id="">
+            <option selected disabled="disabled">Productos escasos ({{ count($productosEscasos) }})</option>
+            @foreach ($productosEscasos as $producto)
+                <option disabled="disabled"> {{ '(' . $producto->stock .') ' . $producto->id . ' - ' . $producto->nombre }} </option>
+            @endforeach
+        </select>
+    @endif
+
     <div class="table-container">
         <table class="tabla" cellspacing="0">
             <thead>
@@ -21,6 +32,7 @@
                 <th class="capitalize">Descripción</th>
                 <th class="capitalize">Color</th>
                 <th class="capitalize">Precio de venta</th>
+                <th class="capitalize">Costo</th>
                 <th class="capitalize">Stock</th>
                 <th>Acciones</th>
             </thead>
@@ -43,13 +55,14 @@
                         <td> {{ $dato->descripcion }} </td>
                         <td> {{ $dato->color }} </td>
                         <td> $ {{ $dato->precioVenta }} </td>
+                        <td> $ {{ $dato->costo }} </td>
                         <td> {{ $dato->stock }} </td>
                         <td>
                             <div class="acciones">
-                                <a class="fa-solid fa-eye" href="/{{ strtolower($titulo) }}/consultar?id={{ $dato->id }}"></a>
-                                <a class="fa-solid fa-pen-to-square" href="/{{ strtolower($titulo) }}/actualizar?id={{ $dato->id }}"></a>
-                                <a class="fa-solid fa-trash-can" onclick="return confirm('¿Seguro que desea eliminar el registro?')" href="/{{ strtolower($titulo) }}/eliminar?id={{ $dato->id }}"></a>
-                                <a class="fa-solid fa-barcode" href="/{{ strtolower($titulo) }}/barcode?id={{ $dato->id }}"></a>
+                                <a title="Consultar" class="fa-solid fa-eye" href="/{{ strtolower($titulo) }}/consultar?id={{ $dato->id }}"></a>
+                                <a title="Actualizar" class="fa-solid fa-pen-to-square" href="/{{ strtolower($titulo) }}/actualizar?id={{ $dato->id }}"></a>
+                                <a title="Eliminar" class="fa-solid fa-trash-can" onclick="return confirm('¿Seguro que desea eliminar el registro?')" href="/{{ strtolower($titulo) }}/eliminar?id={{ $dato->id }}"></a>
+                                <a title="Generar código de barras" class="fa-solid fa-barcode" href="/{{ strtolower($titulo) }}/barcode?id={{ $dato->id }}"></a>
                             </div>
                         </td>
                     </tr>

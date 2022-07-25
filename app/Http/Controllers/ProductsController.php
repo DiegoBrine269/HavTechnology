@@ -2,20 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
 use Exception;
 use App\Models\Product;
 use App\Models\Provider;
 use App\Helpers\AppHelper;
+use App\Models\Refund;
+use App\Models\SalesProduct;
 use Illuminate\Http\Request;
 use App\Models\UniqueProduct;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
 
+use Illuminate\Support\Facades\File;
 use function PHPUnit\Framework\isNull;
 use Illuminate\Support\Facades\Storage;
 
-class ProductsController extends Controller
-{
-
+class ProductsController extends Controller {
     public function __construct()
     {
         $this->middleware('auth');
@@ -29,13 +31,51 @@ class ProductsController extends Controller
     public function index (Request $request) {
         $productos = Product::orderBy('id')->get();
         $resultado = $request->resultado;
+        // $productosEscasos = Product::where('stock', '<', 'cantidadMinima')->orderBy('id')->toSql();
+        $productosEscasos = DB::select( ' select *
+                                from
+                                products
+                            where
+                                stock < cantidadMinima
+                            order by
+                                id asc' );
+        
+        // dd($productosEscasos);
 
         return view('productos/index', [
             'titulo' => 'productos',
             'datos' => $productos,
-            'resultado' => $resultado
+            'resultado' => $resultado,
+            'productosEscasos' => $productosEscasos
         ]);
     }
+
+    public function consultarUnico (Request $request) { 
+
+        //Información sobre el producto único (¿existe?, ¿fue vendido?, ¿a quién?, ¿cuándo?)
+        try {
+            $producto = null;
+            $devolucion = null;
+            $venta = null;
+            if(isset($request->id)){
+                $producto = UniqueProduct::where('idUnico', '=', $request->id)->join('products', 'unique_products.id', '=', 'products.id')->get()[0] ?? null;
+                $devolucion = Refund::where('idProducto', '=', $request->id)->get()[0] ?? null;
+                $venta = SalesProduct::where('idProducto', '=', $request->id)->join('sales', 'sales_products.idVenta', '=', 'sales.id')->join('customers', 'sales.idCliente', '=', 'customers.id')->get()[0] ?? null;
+                // dd($devolucion);
+            }
+            
+            return view('productos/consultar-unico', [
+                'titulo' => 'Consultar producto único', 
+                'producto' => $producto,
+                'devolucion' => $devolucion,
+                'venta' => $venta
+            ]);
+
+        } catch (Exception $exception) {
+            // dd($exception);
+            return $this->volverAInicio('0');
+        }
+    } 
 
     public function registrar (Request $request) {
         try {
@@ -201,7 +241,9 @@ class ProductsController extends Controller
                 'nombre' => $request->producto['nombre'],
                 'descripcion' => $request->producto['descripcion'],
                 'color' => $request->producto['color'],
-                'precioVenta' => $request->producto['precioventa']
+                'precioVenta' => $request->producto['precioventa'],
+                'costo' => $request->producto['costo'],
+                'cantidadMinima' => $request->producto['cantidadMinima']
             ]);
  
             UniqueProduct::where('id', $idOriginal)->update([
@@ -211,7 +253,6 @@ class ProductsController extends Controller
             // Actualizar imagen en caso de ser necesario
             $nuevaImagen = $request->file('nuevaImagen');
             if($nuevaImagen !== null) {
-
                 // Elimino la imagen del servidor
                 File::delete(public_path($request->imagenOriginal));
 
@@ -251,6 +292,14 @@ class ProductsController extends Controller
         }
     }
 
+    public function catalogo () {
+        $productos = Product::orderBy('id')->get();
+        $datos = compact('productos');
+
+        $pdf = PDF::loadView('productos.catalogo', $datos);
+        return $pdf->stream('HAV Technology - Catálogo de productos.pdf');
+    }
+
     public function productoUnicoEliminar (Request $request) {
         if(!isset($request->id)) {
             return redirect('/productos');
@@ -267,7 +316,9 @@ class ProductsController extends Controller
 
             Product::where('id', $id)->update([
                 'stock' => $producto->stock - 1
-            ]);     
+            ]);    
+            
+            unlink(public_path("img/").$producto->imagen);
             
             return $this->volverAInicio('3');
         } catch (Exception $exception) {
@@ -284,18 +335,23 @@ class ProductsController extends Controller
 
 
     public function eliminar (Request $request) {
+        
         if(!isset($request->id)) 
             return redirect('/productos');
-
+        
         try {
+            $nombreImagen = Product::where('id','=', $request->id)->select('imagen')->get()[0]->imagen;
+            
+            // dd($nombreImagen);
             UniqueProduct::where('id','=', $request->id)->delete();
             Product::where('id','=', $request->id)->delete();
-    
+            
+            unlink(public_path("img/") . $nombreImagen);
+            
             return $this->volverAInicio('3');
+            
         } catch (Exception $exception) {
             return $this->volverAInicio('0');
         }
-
-
     }
 }

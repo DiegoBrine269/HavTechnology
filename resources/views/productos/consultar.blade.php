@@ -43,6 +43,11 @@
         </div>
 
         <div class="campo">
+            <label for="stock">Cantidad mínima:</label>
+            <input value="{{ $producto->cantidadMinima }}" required type="number" min="1" max="99999" name="producto[cantidadMinima]" id="cantidadMinima">
+        </div>
+
+        <div class="campo">
             <label for="color">Color:</label>
             <input value="{{ $producto->color }}" required type="text" name="producto[color]" id="color">
         </div>
@@ -50,6 +55,11 @@
         <div class="campo">
             <label for="precioventa">Precio de venta:</label>
             <input value="{{ $producto->precioVenta }}" required type="number" name="producto[precioventa]" id="precioventa">
+        </div>
+
+        <div class="campo">
+            <label for="precioventa">Costo:</label>
+            <input value="{{ $producto->costo }}" required type="number" min="1" max="99999" name="producto[costo]" id="costo">
         </div>
 
         {{-- <div class="campo">
@@ -86,8 +96,8 @@
                         <td> {{ $productoUnico->lote }} </td>
                         <td> {{ $productoUnico->nombre }} </td>
                         <td class="acciones">
-                            <a class="fa-solid fa-trash-can" href="/producto-unico/eliminar?id={{ $productoUnico->idUnico }}"></a>
-                            <a class="fa-solid fa-barcode" href="/productos/barcode?id={{ $productoUnico->idUnico }}"></a>
+                            <a title="Eliminar" class="fa-solid fa-trash-can" href="/producto-unico/eliminar?id={{ $productoUnico->idUnico }}"></a>
+                            <a title="Generar código de barras" class="fa-solid fa-barcode" href="/productos/barcode?id={{ $productoUnico->idUnico }}"></a>
                         </td>
                     </tr>
                 @endforeach

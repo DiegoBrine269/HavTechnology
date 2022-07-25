@@ -7,38 +7,24 @@
         <input class="boton boton-principal" type="submit" value="Buscar" id="buscar">
     </form>
     <div class="opciones">
-        <a href="/{{ strtolower($titulo) }}/registrar" class="boton">Registrar nueva devolución</a>
+        <a href="/{{ strtolower($titulo) }}/registrar" class="boton">Crear nuevo presupuesto</a>
     </div>
 </div>
 
 <div class="table-container">
     <table class="tabla" cellspacing=0>
         <thead>
-            <th class="capitalize">ID</th>
-            <th class="capitalize">ID del producto</th>
-            <th class="capitalize">Pérdida total</th>
-            <th class="capitalize">Fecha</th>
+            <th class="capitalize">ID (folio)</th>
+            <th class="capitalize">Destinatario</th>
+            <th class="capitalize">Correo</th>
             <th>Acciones</th>
         </thead>
         <tbody>
             @foreach ($datos as $dato)
                 <tr>
-                    <td> {{ $dato->id }} </td>
-                    <td> {{ $dato->idProducto }} </td>
-                    <td>
-                        @if ($dato->perdidaTotal == '1')
-                            Sí  
-                        @else
-                            No
-                        @endif 
-                    </td>
-    
-                    <td> 
-                        @php
-                            $date = date_create($dato->fecha);
-                        @endphp
-                        {{ date_format($date, 'd/m/Y') }}     
-                    </td>
+                    <td> {{ substr($dato->id, 0, -4) }} </td>
+                    <td> {{ $dato->nombreCliente }} </td>
+                    <td> {{$dato->correo}} </td>
                     <td>
                         <div class="acciones">
                             <a title="Consultar" class="fa-solid fa-eye" href="/{{ strtolower($titulo) }}/consultar?id={{ $dato->id }}"></a>
@@ -50,6 +36,5 @@
             @endforeach
         </tbody>
     </table>
-
 </div>
 @stop
