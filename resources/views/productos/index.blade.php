@@ -31,8 +31,8 @@
                 <th class="capitalize">Imagen</th>
                 <th class="capitalize">Descripción</th>
                 <th class="capitalize">Color</th>
-                <th class="capitalize">Precio de venta</th>
-                <th class="capitalize">Costo</th>
+                <th class="capitalize no-wrap">Precio de venta</th>
+                <th class="capitalize no-wrap">Costo</th>
                 <th class="capitalize">Stock</th>
                 <th>Acciones</th>
             </thead>
@@ -54,8 +54,8 @@
                         </td>
                         <td> {{ $dato->descripcion }} </td>
                         <td> {{ $dato->color }} </td>
-                        <td> $ {{ $dato->precioVenta }} </td>
-                        <td> $ {{ $dato->costo }} </td>
+                        <td class="no-wrap"> $ {{ $dato->precioVenta }} </td>
+                        <td class="no-wrap"> $ {{ $dato->costo }} </td>
                         <td> {{ $dato->stock }} </td>
                         <td>
                             <div class="acciones">

@@ -3,6 +3,7 @@
 @section('content')    
     <form action="/productos/actualizar" class="formulario" method="POST"  enctype="multipart/form-data">
         @csrf
+        <p class="alinear-derecha is-required"> Campos obligatorios</p>
         <input type="hidden" name="producto[idOriginal]" value="{{ $producto->id }}">
 
         <div class="campo">
@@ -61,11 +62,6 @@
             <label class="is-required" for="precioventa">Costo:</label>
             <input value="{{ $producto->costo }}" required type="number" min="1" max="99999" name="producto[costo]" id="costo">
         </div>
-
-        {{-- <div class="campo">
-            <label class="is-required" for="stock">Stock:</label>
-            <input value="{{ $producto->stock }}" required type="number" min="1" max="9999" name="producto[stock]" id="cantidad">
-        </div> --}}
         
         <div class="campo-dos">
             <input class="boton boton-principal" type="submit" value="Actualizar">
@@ -80,7 +76,9 @@
             <th class="capitalize">Existe</th>
             <th class="capitalize">Lote</th>
             <th class="capitalize">Proveedor</th>
+            <th class="capitalize">Fecha de ingreso</th>
             <th class="capitalize">Acciones</th>
+            
         </thead>
         <tbody>
                 @foreach ($productosUnicos as $productoUnico)
@@ -95,6 +93,12 @@
                         </td>
                         <td> {{ $productoUnico->lote }} </td>
                         <td> {{ $productoUnico->nombre }} </td>
+                        <td> 
+                            @php
+                                $date = date_create($productoUnico->fechaIngreso);
+                            @endphp
+                            {{ date_format($date, 'd/m/Y') }} 
+                        </td>
                         <td class="acciones">
                             <a title="Eliminar" class="fa-solid fa-trash-can" href="/producto-unico/eliminar?id={{ $productoUnico->idUnico }}"></a>
                             <a title="Generar código de barras" class="fa-solid fa-barcode" href="/productos/barcode?id={{ $productoUnico->idUnico }}"></a>

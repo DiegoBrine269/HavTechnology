@@ -3,6 +3,7 @@
 @section('content')    
     <form action="/devoluciones/actualizar" class="formulario" method="POST">
         @csrf
+        <p class="alinear-derecha is-required"> Campos obligatorios</p>
         <input type="hidden" name="devolucion[id]" value="{{ $devolucion->id }}">
         <div class="campo">
             <label for="idUnico">ID del producto:</label>
@@ -10,7 +11,7 @@
         </div>
 
         <div class="campo">
-            <label for="perdidaTotal">Pérdida Total:</label>
+            <label class="is-required" for="perdidaTotal">Pérdida Total:</label>
             <select required name="devolucion[perdidaTotal]" id="perdidaTotal">
                 <option 
                     value="1"
@@ -32,7 +33,7 @@
         </div>
 
         <div class="campo">
-            <label for="correo">Fecha:</label>
+            <label class="is-required" for="correo">Fecha:</label>
             <input required type="date" name="devolucion[fecha]" id="fecha" value="{{ $devolucion->fecha }}">
         </div>
 

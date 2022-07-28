@@ -157,4 +157,10 @@ ADD CONSTRAINT fk_estimates FOREIGN KEY (idPresupuesto) REFERENCES estimates(id)
 ALTER TABLE estimates_products
 ADD CONSTRAINT fk_estimates_products FOREIGN KEY (idProducto) REFERENCES products(id);
 
+/*Cambios*/
 
+/*Cambiar a 10 los decimales de los precios y costos de productos*/
+/*Cambiar a 20 los decimales de las ventas*/
+
+ALTER TABLE unique_products
+ADD COLUMN fechaIngreso DATE AFTER lote;

@@ -3,13 +3,14 @@
 @section('content')    
     <form action="/devoluciones/registrar" class="formulario" method="POST">
         @csrf
+        <p class="alinear-derecha is-required"> Campos obligatorios</p>
         <div class="campo">
-            <label for="idUnico">ID del producto:</label>
+            <label class="is-required" for="idUnico">ID del producto:</label>
             <input required type="text" name="devolucion[idProducto]" id="idUnico">
         </div>
 
         <div class="campo">
-            <label for="perdidaTotal">Pérdida Total:</label>
+            <label class="is-required" for="perdidaTotal">Pérdida Total:</label>
             <select required name="devolucion[perdidaTotal]" id="perdidaTotal">
                 <option value="1"> Sí </option>
                 <option value="0"> No </option>
@@ -17,7 +18,7 @@
         </div>
 
         <div class="campo">
-            <label for="correo">Fecha:</label>
+            <label class="is-required" for="correo">Fecha:</label>
             <input required type="date" name="devolucion[fecha]" id="fecha">
         </div>
 

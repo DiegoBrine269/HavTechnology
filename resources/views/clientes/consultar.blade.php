@@ -33,7 +33,7 @@
 
         <div class="campo">
             <label for="color">Correo</label>
-            <input value="{{ $cliente->correo }}" required type="text" name="cliente[correo]" id="correo" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+            <input readonly value="{{ $cliente->correo }}" required type="text" name="cliente[correo]" id="correo" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
         </div>
     </form>
 @stop

@@ -3,8 +3,9 @@
 @section('content')    
     <form action="/ventas/registrar" class="formulario" method="POST">
         @csrf
+        <p class="alinear-derecha is-required"> Campos obligatorios</p>
         <div class="campo">
-            <label for="cliente">Cliente:</label>
+            <label class="is-required" for="cliente">Cliente:</label>
             <select required name="venta[idCliente]" id="cliente">    
                 {{-- //Despliega en el select todos los clientes que están registrados --}}
                 @foreach ($clientes as $cliente) 
@@ -14,19 +15,19 @@
         </div>
 
         <div class="campo">
-            <label for="fecha">Fecha:</label>
+            <label class="is-required" for="fecha">Fecha:</label>
             <input type="date" name="venta[fecha]" id="fecha" required>
         </div>
 
         <div class="campo">
-            <label for="total">Artículos vendidos:</label>
+            <label class="is-required" for="total">Artículos vendidos:</label>
             <div class="lista-productos">
                 <input required type="text" name="productos[]" class="producto-item" placeholder="ID o SKU">
             </div>
         </div>
 
         <div class="campo">
-            <label for="total">Total:</label>
+            <label class="is-required" for="total">Total:</label>
             <input required type="number" min="1" max="99999" name="venta[total]" id="total">
         </div>
 

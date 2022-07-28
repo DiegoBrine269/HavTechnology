@@ -3,6 +3,7 @@
 @section('content')    
     <form action="/presupuestos/registrar" class="formulario" method="POST">
         @csrf
+        <p class="alinear-derecha is-required"> Campos obligatorios</p>
         <div class="campo">
             <label for="idUnico">Cliente:</label>
             <input type="text" name="presupuesto[nombreCliente]" id="idUnico">
@@ -19,7 +20,7 @@
         </div>
 
         <div class="campo">
-            <label for="total">Artículos a cotizar:</label>
+            <label class="is-required" for="total">Artículos a cotizar:</label>
             <div class="lista-productos" style="gap: 0;">
                 <div class="campo-dos">
                     <input required type="text" name="productos[]" class="producto-item" placeholder="ID o SKU">

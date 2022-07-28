@@ -60,6 +60,7 @@
             <th class="capitalize">Existe</th>
             <th class="capitalize">Lote</th>
             <th class="capitalize">Proveedor</th>
+            <th class="capitalize">Fecha de ingreso</th>
             <th class="capitalize">Acciones</th>
         </thead>
         <tbody>
@@ -75,6 +76,12 @@
                         </td>
                         <td> {{ $productoUnico->lote }} </td>
                         <td> {{ $productoUnico->nombre }} </td>
+                        <td>
+                            @php
+                                $date = date_create($productoUnico->fechaIngreso);
+                            @endphp
+                            {{ date_format($date, 'd/m/Y') }} 
+                        </td>
                         <td class="acciones">
                             <a title="Eliminar" class="fa-solid fa-trash-can" href="/producto-unico/eliminar?id={{ $productoUnico->idUnico }}"></a>
                             <a title="Generar código de barras" class="fa-solid fa-barcode" href="/productos/barcode?id={{ $productoUnico->idUnico }}"></a>

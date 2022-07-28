@@ -64,6 +64,11 @@
         </div>
 
         <div class="campo">
+            <label class="is-required" for="fecha">Fecha de ingreso:</label>
+            <input type="date" name="producto[fechaIngreso]" id="fecha" required>
+        </div>
+
+        <div class="campo">
             <input class="boton boton-principal" type="submit" value="Registrar">
         </div>   
     </form>

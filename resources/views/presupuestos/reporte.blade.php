@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="refresh" content="3; url=http://127.0.0.1:8000/productos">
     <title>Document</title>
     <style>
         body {
@@ -142,6 +143,8 @@
     </style>
 </head>
 <body>
+    <script>
+    </script>
     <header>
         <table class="encabezado">
             <tr>
@@ -162,7 +165,7 @@
     </header>
 
     <p class="bold">
-        @if (is_null($nuevoPresupuesto->nombreCliente))
+        @if (is_null($nuevoPresupuesto->nombreCliente) || $nuevoPresupuesto->nombreCliente == '')
             A quien corresponda:
         @else
             {{ 'Sr(a). ' . $nuevoPresupuesto->nombreCliente . ':' }}

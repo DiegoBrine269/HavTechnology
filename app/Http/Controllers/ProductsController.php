@@ -4,18 +4,19 @@ namespace App\Http\Controllers;
 
 use PDF;
 use Exception;
+use Carbon\Carbon;
+use App\Models\Refund;
 use App\Models\Product;
 use App\Models\Provider;
 use App\Helpers\AppHelper;
-use App\Models\Refund;
 use App\Models\SalesProduct;
 use Illuminate\Http\Request;
 use App\Models\UniqueProduct;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use function PHPUnit\Framework\isNull;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
-use Carbon\Carbon;
 
 
 class ProductsController extends Controller {
@@ -26,10 +27,12 @@ class ProductsController extends Controller {
 
     private function volverAInicio($resultado = ''){
         $resultado = '?resultado=' . $resultado;
-        return redirect('/productos' . $resultado );
+
+        return redirect('/productos' . $resultado . $download);
     }
 
     public function index (Request $request) {
+
         $productos = Product::orderBy('id')->get();
         $resultado = $request->resultado;
         // $productosEscasos = Product::where('stock', '<', 'cantidadMinima')->orderBy('id')->toSql();
@@ -93,20 +96,20 @@ class ProductsController extends Controller {
                 $nuevoProducto->precioVenta = $request->producto['precioventa'];
                 $nuevoProducto->costo = $request->producto['costo'];
                 $nuevoProducto->stock = $request->producto['stock'];
-    
+                
                 // Guardar imagen
                 $imagen = $request->file('imagen');
                 $nombreImagen = $request->producto['id'] . "." . $imagen->guessExtension();
                 $ruta = public_path("img/");
                 copy($imagen->getRealPath(), $ruta.$nombreImagen);
-    
+                
                 //Guardar ruta de imagen en la base
                 $nuevoProducto->imagen = $nombreImagen;
-    
+                
                 $nuevoProducto->save();
-    
+                
                 $srcs = [];
-    
+                
                 for ($i=1; $i <= $nuevoProducto->stock; $i++) { 
                     $nuevoProductoUnico = new UniqueProduct();
                     $nuevoProductoUnico->id = $request->producto['id'];
@@ -115,15 +118,16 @@ class ProductsController extends Controller {
                     $nuevoProductoUnico->existe = '1';
                     $nuevoProductoUnico->lote = $request->producto['lote'];
                     $nuevoProductoUnico->idProveedor = $request->producto['idProveedor'];
+                    $nuevoProductoUnico->fechaIngreso = $request->producto['fechaIngreso'];
                     $nuevoProductoUnico->save();
                     
                     //Creación de código de barras
                     $srcs [] = "http://bwipjs-api.metafloor.com/?bcid=code128&text=" . $nuevoProductoUnico->idUnico . "&includetext";
                 }  
     
-                return  \AppHelper::generarBarcodesPDF($srcs, $request->producto['id']);
+                return \AppHelper::generarBarcodesPDF($srcs, $request->producto['id']);
     
-                return $this->volverAInicio('1');
+                return $this->volverAInicio('1', 'true');
             }
     
             return view('productos/registrar', [
@@ -173,7 +177,6 @@ class ProductsController extends Controller {
     public function registrarEntrada(Request $request){
         if($request->isMethod('post')){
             
-            
             //El producto sí existe
             if (Product::where('id', '=', $request->producto['id'])->exists())  {
 
@@ -203,6 +206,7 @@ class ProductsController extends Controller {
                     $nuevoProductoUnico->existe = '1';
                     $nuevoProductoUnico->lote = $request->producto['lote'];
                     $nuevoProductoUnico->idProveedor = $request->producto['idProveedor'];
+                    $nuevoProductoUnico->fechaIngreso = $request->producto['fechaIngreso'];
 
                     $srcs [] = "http://bwipjs-api.metafloor.com/?bcid=code128&text=" . $nuevoProductoUnico->idUnico . "&includetext";
 
@@ -264,11 +268,12 @@ class ProductsController extends Controller {
                     'color' => $request->producto['color'],
                     'precioVenta' => $request->producto['precioventa'],
                     'costo' => $request->producto['costo'],
-                    'cantidadMinima' => $request->producto['cantidadMinima']
+                    'cantidadMinima' => $request->producto['cantidadMinima'],
                 ]);
-    
+                
                 UniqueProduct::where('id', $idOriginal)->update([
-                    'id' => $request->producto['idOriginal']
+                    'id' => $request->producto['idOriginal'],
+                    // 'fechaIngreso' => $request->producto['fechaIngreso']
                 ]);      
 
                 // Actualizar imagen en caso de ser necesario

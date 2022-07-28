@@ -47,3 +47,7 @@
 .alinear-izquierda {
     text-align: left;
 }
+
+.no-wrap {
+    white-space: nowrap;
+}

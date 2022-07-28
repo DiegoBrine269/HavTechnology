@@ -16,6 +16,14 @@
     <header class="header">
         <div class="contenedor contenido-header">
             <h1>HAV Technology</h1>
+            <div>
+                <p style="margin:0">Nombre: <span class="bold"> {{ Auth::user()->name }} </span></p>
+                @if (Auth::user()->is_admin == '1')
+                    <p style="margin:0">Rol: <span class="bold">Administrador</span></p>            
+                @else
+                    <p style="margin:0">Rol: <span class="bold">Empleado</span></p>
+                @endif
+            </div>
         </div>
     </header>
 

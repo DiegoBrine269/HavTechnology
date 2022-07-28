@@ -3,10 +3,10 @@
 @section('content')    
     <form action="/ventas/actualizar" class="formulario" method="POST">
         @csrf
+        <p class="alinear-derecha is-required"> Campos obligatorios</p>
         <input type="hidden" name="venta[idOriginal]" value="{{ $venta->id }}">
         <div class="campo">
-
-            <label for="cliente">Cliente:</label>
+            <label class="is-required" for="cliente">Cliente:</label>
             <select required name="venta[idCliente]" id="cliente">    
                 @foreach ($clientes as $cliente) 
                     <option 
@@ -22,12 +22,12 @@
         </div>
 
         <div class="campo">
-            <label for="venta[fecha]">Fecha:</label>
+            <label class="is-required" for="venta[fecha]">Fecha:</label>
             <input type="date" name="venta[fecha]" id="fecha" required value="{{ $venta->fecha }}">
         </div>
 
         <div class="campo">
-            <label for="total">Total:</label>
+            <label class="is-required" for="total">Total:</label>
             <input value="{{ $venta->total }}" type="text" required name="venta[total]" id="total">
         </div>
         

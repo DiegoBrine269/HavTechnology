@@ -1,5 +1,9 @@
 <?php
-    namespace App\Helpers;
+
+
+namespace App\Helpers;
+
+    use Illuminate\Support\Facades\Session;
 
     use PDF;
 
@@ -9,7 +13,8 @@
             $data = compact('srcs');
 
             $pdf = PDF::loadView('productos.barcodes', $data);
-            return $pdf->download("barcodes_{$id}.pdf");
+        
+            return $pdf->stream("barcodes_{$id}.pdf");
         }
 
         public static function instance()
