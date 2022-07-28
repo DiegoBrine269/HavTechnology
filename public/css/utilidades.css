@@ -32,3 +32,18 @@
         gap: 1rem;
     }    
 }
+
+.is-required:after {
+    content: '*';
+    margin-left: 3px;
+    color: red;
+    font-weight: bold;
+}
+
+.alinear-derecha {
+    text-align: right;
+}
+
+.alinear-izquierda {
+    text-align: left;
+}

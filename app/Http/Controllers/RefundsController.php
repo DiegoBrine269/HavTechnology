@@ -88,6 +88,25 @@ class RefundsController extends Controller
     public function consultar (Request $request) {
 
         try {
+            if(!isset($request->id)) {
+                return redirect('/devoluciones');;
+            }
+            
+            $devolucion = Refund::find($request->id);        
+
+            return view('devoluciones/consultar', [
+                'devolucion' => $devolucion,
+                'titulo' => 'Consultar devolución ' . $request->id
+            ]);
+            
+        } catch (Exception $exception) {
+            return $this->volverAInicio('0');
+        }
+    }
+
+    public function actualizar (Request $request) {
+
+        try {
             //Envío de formulario para actualizar producto
             if($request->isMethod('post')){
                 Refund::where('id', $request->devolucion['id'])->update([
@@ -105,15 +124,14 @@ class RefundsController extends Controller
                 
                 $devolucion = Refund::find($request->id);        
 
-                return view('devoluciones/consultar', [
+                return view('devoluciones/actualizar', [
                     'devolucion' => $devolucion,
-                    'titulo' => 'Consultar devolución ' . $request->id
+                    'titulo' => 'Actualizar devolución ' . $request->id
                 ]);
             }
         } catch (Exception $exception) {
             return $this->volverAInicio('0');
         }
-
     }
 
     public function eliminar (Request $request) {

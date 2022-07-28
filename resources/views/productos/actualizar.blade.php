@@ -3,12 +3,12 @@
 @section('content')    
     <form action="/productos/actualizar" class="formulario" method="POST"  enctype="multipart/form-data">
         @csrf
-        <input readonly type="hidden" name="producto[idOriginal]" value="{{ $producto->id }}">
+        <input type="hidden" name="producto[idOriginal]" value="{{ $producto->id }}">
 
-        {{-- <div class="campo">
-            <label for="nombre">Nombre:</label>
-            <input readonly value="{{ $producto->nombre }}" required type="text" name="producto[nombre]" id="nombre">
-        </div> --}}
+        <div class="campo">
+            <label class="is-required" for="nombre">Nombre:</label>
+            <input value="{{ $producto->nombre }}" required type="text" name="producto[nombre]" id="nombre">
+        </div>
 
         <div class="campo">
             <label for="">Imagen:</label>
@@ -21,36 +21,56 @@
                 alt="Imagen de producto"
             >
             </div>
+        
+        <input 
+            type="hidden" 
+            name="imagenOriginal"
+            @if (!isset($producto->imagen))
+                value="" 
+            @else
+                value="/img/{{ $producto->imagen }}" 
+            @endif 
+        >
 
         <div class="campo">
-            <label for="descripcion">Descripción:</label>
-            <textarea readonly required name="producto[descripcion]" id="descripcion" cols="30" rows="10">{{ $producto->descripcion }}</textarea>
+            <label for="imagen">Nueva imagen:</label>
+            <input type="file" name="nuevaImagen" id="imagen">
         </div>
 
         <div class="campo">
-            <label for="stock">Cantidad mínima:</label>
-            <input readonly value="{{ $producto->cantidadMinima }}" required type="number" min="1" max="99999" name="producto[cantidadMinima]" id="cantidadMinima">
+            <label class="is-required" for="descripcion">Descripción:</label>
+            <textarea required name="producto[descripcion]" id="descripcion" cols="30" rows="10">{{ $producto->descripcion }}</textarea>
         </div>
 
         <div class="campo">
-            <label for="color">Color:</label>
-            <input readonly value="{{ $producto->color }}" required type="text" name="producto[color]" id="color">
+            <label class="is-required" for="stock">Cantidad mínima:</label>
+            <input value="{{ $producto->cantidadMinima }}" required type="number" min="1" max="99999" name="producto[cantidadMinima]" id="cantidadMinima">
         </div>
 
         <div class="campo">
-            <label for="precioventa">Precio de venta:</label>
-            <input readonly value="{{ $producto->precioVenta }}" required type="number" name="producto[precioventa]" id="precioventa">
+            <label class="is-required" for="color">Color:</label>
+            <input value="{{ $producto->color }}" required type="text" name="producto[color]" id="color">
         </div>
 
         <div class="campo">
-            <label for="precioventa">Costo:</label>
-            <input readonly value="{{ $producto->costo }}" required type="number" min="1" max="99999" name="producto[costo]" id="costo">
+            <label class="is-required" for="precioventa">Precio de venta:</label>
+            <input value="{{ $producto->precioVenta }}" required type="number" name="producto[precioventa]" id="precioventa">
+        </div>
+
+        <div class="campo">
+            <label class="is-required" for="precioventa">Costo:</label>
+            <input value="{{ $producto->costo }}" required type="number" min="1" max="99999" name="producto[costo]" id="costo">
         </div>
 
         {{-- <div class="campo">
-            <label for="stock">Stock:</label>
+            <label class="is-required" for="stock">Stock:</label>
             <input value="{{ $producto->stock }}" required type="number" min="1" max="9999" name="producto[stock]" id="cantidad">
-        </div> --}} 
+        </div> --}}
+        
+        <div class="campo-dos">
+            <input class="boton boton-principal" type="submit" value="Actualizar">
+            <a href="/productos" class="boton">Volver atrás</a>
+        </div>   
     </form>
 
     <h3>Productos únicos</h3>

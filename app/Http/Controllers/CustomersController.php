@@ -34,8 +34,30 @@ class CustomersController extends Controller
         ]);
     }
 
-    //Consulta y actualiza
     public function consultar (Request $request) {
+        try {
+            if(!isset($request->id)) {
+                return redirect('/clientes');;
+            }
+
+            $cliente = Customer::find($request->id);    
+            $usoCFDI = UsoCfdi::find($cliente->usoCFDI);
+
+            // dd($usoCFDI);
+            // dd($cliente->usoCFDI);
+
+            return view('clientes/consultar', [
+                'cliente' => $cliente,
+                'titulo' => 'Consultar cliente ' . $request->id,
+                'usoCFDI' => $usoCFDI
+            ]);
+            
+        } catch (Exception $exception) {
+            return $this->volverAInicio('0');
+        }
+    }
+
+    public function actualizar (Request $request) {
         try {
             //Envío de formulario para actualizar producto
             if($request->isMethod('post')){
@@ -60,11 +82,9 @@ class CustomersController extends Controller
                 $cliente = Customer::find($request->id);    
                 $usosCFDI = UsoCfdi::all();
 
-                // dd($usosCFDI);
-
-                return view('clientes/consultar', [
+                return view('clientes/actualizar', [
                     'cliente' => $cliente,
-                    'titulo' => 'Consultar cliente ' . $request->id,
+                    'titulo' => 'Actualizar cliente ' . $request->id,
                     'usosCFDI' => $usosCFDI
                 ]);
             }

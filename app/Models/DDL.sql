@@ -60,8 +60,7 @@ CREATE TABLE customers (
     correo VARCHAR(100)
 );
 
-/*ALTER TABLE Cliente
-ADD CONSTRAINT pk_cliente PRIMARY KEY (id);*/
+
 
 CREATE TABLE sales (
 	id INT(10) AUTO_INCREMENT PRIMARY KEY,

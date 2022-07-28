@@ -59,13 +59,30 @@ class ProvidersController extends Controller {
         }
     }
 
-    //Consulta y actualiza
     public function consultar (Request $request) {
+
+        try {
+            if(!isset($request->id)) {
+                return redirect('/proveedores');;
+            }
+
+            $proveedor = Provider::find($request->id);        
+
+            return view('proveedores/consultar', [
+                'proveedor' => $proveedor,
+                'titulo' => 'Consultar proveedor ' . $request->id
+            ]);
+            
+        } catch (Exception $exception) {
+            return $this->volverAInicio('0');
+        }
+    }
+    
+    public function actualizar (Request $request) {
 
         try {
             //Envío de formulario para actualizar producto
             if($request->isMethod('post')){
-                
                 Provider::where('id', $request->proveedor['id'])->update([
                     'nombre' => $request->proveedor['nombre'],
                     'telefono' => $request->proveedor['telefono'],
@@ -82,15 +99,14 @@ class ProvidersController extends Controller {
 
                 $proveedor = Provider::find($request->id);        
 
-                return view('proveedores/consultar', [
+                return view('proveedores/actualizar', [
                     'proveedor' => $proveedor,
-                    'titulo' => 'Consultar proveedor ' . $request->id
+                    'titulo' => 'Actualizar proveedor ' . $request->id
                 ]);
             }
         } catch (Exception $exception) {
             return $this->volverAInicio('0');
         }
-
     }
 
     

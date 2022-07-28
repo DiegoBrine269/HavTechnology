@@ -110,6 +110,32 @@ class SalesController extends Controller
 
     public function consultar (Request $request) {
         try {
+            if(!isset($request->id)) {
+                return redirect('/ventas');;
+            }
+
+            $venta = Sale::where('sales.id', '=', $request->id)
+                        ->join('customers', 'sales.idCliente', '=', 'customers.id')
+                        ->select('sales.id', 'customers.id as idCliente', 'customers.nombre as nombreCliente', 'sales.fecha', 'sales.total')->get();        
+            
+            $productosUnicos = UniqueProduct::join('sales_products', 'unique_products.idUnico', '=', 'sales_products.idProducto')->join('products', 'unique_products.id', '=', 'products.id')->where('sales_products.idVenta', $request->id)->select('unique_products.idUnico', 'products.precioVenta')->orderBy('idUnico')->get();
+
+            $clientes = Customer::all();
+
+            return view('ventas/consultar', [
+                'venta' => $venta[0],
+                'productosUnicos' => $productosUnicos,
+                'clientes' => $clientes,
+                'titulo' => 'Consultar venta ' . $request->id
+            ]);
+            
+        } catch (Exception $exception) {
+            return $this->volverAInicio('0');
+        }
+    }
+
+    public function actualizar (Request $request) {
+        try {
             //Envío de formulario para actualizar producto
             if($request->isMethod('post')){
                 $idOriginal = $request->venta['idOriginal'];
@@ -136,17 +162,18 @@ class SalesController extends Controller
 
                 $clientes = Customer::all();
 
-                return view('ventas/consultar', [
+                return view('ventas/actualizar', [
                     'venta' => $venta[0],
                     'productosUnicos' => $productosUnicos,
                     'clientes' => $clientes,
-                    'titulo' => 'Consultar venta ' . $request->id
+                    'titulo' => 'actualizar venta ' . $request->id
                 ]);
             }
         } catch (Exception $exception) {
             return $this->volverAInicio('0');
         }
     }
+
 
 
     public function reporte (Request $request) {
@@ -160,8 +187,6 @@ class SalesController extends Controller
         $fecha = date('d/M/Y');
         $fechaInicial = '';
         $fechaFinal = '';
-        // dd($fecha);
-
 
         switch ($tipo) {
             case 'anual':

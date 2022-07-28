@@ -91,6 +91,7 @@ class ProductsController extends Controller {
                 $nuevoProducto->descripcion = $request->producto['descripcion'];
                 $nuevoProducto->color = $request->producto['color'];
                 $nuevoProducto->precioVenta = $request->producto['precioventa'];
+                $nuevoProducto->costo = $request->producto['costo'];
                 $nuevoProducto->stock = $request->producto['stock'];
     
                 // Guardar imagen
@@ -230,49 +231,8 @@ class ProductsController extends Controller {
         }
     }
 
-
-    //Consulta y actualiza
     public function consultar (Request $request) {
         try {
-            //Envío de formulario para actualizar producto
-        if($request->isMethod('post')){
-            $idOriginal = $request->producto['idOriginal'];
-            
-            Product::where('id', $idOriginal)->update([
-                'nombre' => $request->producto['nombre'],
-                'descripcion' => $request->producto['descripcion'],
-                'color' => $request->producto['color'],
-                'precioVenta' => $request->producto['precioventa'],
-                'costo' => $request->producto['costo'],
-                'cantidadMinima' => $request->producto['cantidadMinima']
-            ]);
- 
-            UniqueProduct::where('id', $idOriginal)->update([
-                'id' => $request->producto['idOriginal']
-            ]);      
-
-            // Actualizar imagen en caso de ser necesario
-            $nuevaImagen = $request->file('nuevaImagen');
-            if($nuevaImagen !== null) {
-                // Elimino la imagen del servidor
-                File::delete(public_path($request->imagenOriginal));
-
-                // Subo una nueva imagen
-                $imagen = $request->file('nuevaImagen');
-                $nombreImagen = $request->producto['idOriginal'] . "." . $imagen->guessExtension();
-                $ruta = public_path("img/");
-                copy($imagen->getRealPath(), $ruta.$nombreImagen);
-
-                // Actualizo el nombre de la imagen en la BD
-                Product::where('id', $idOriginal)->update([
-                    'imagen' => $nombreImagen
-                ]);
-            }
-
-            return $this->volverAInicio('1');
-        }
-        //Petición GET para mostrar el formulario
-        else if($request->isMethod('get')) {
             if(!isset($request->id)) {
                 return redirect('/productos');;
             }
@@ -287,7 +247,67 @@ class ProductsController extends Controller {
                 'productosUnicos' => $productosUnicos,
                 'titulo' => 'Consultar producto ' . $request->id
             ]);
+        } catch (Exception $exception) {
+            return $this->volverAInicio('0');
         }
+    }
+
+    public function actualizar (Request $request) {
+        try {
+            //Envío de formulario para actualizar producto
+            if($request->isMethod('post')){
+                $idOriginal = $request->producto['idOriginal'];
+                
+                Product::where('id', $idOriginal)->update([
+                    'nombre' => $request->producto['nombre'],
+                    'descripcion' => $request->producto['descripcion'],
+                    'color' => $request->producto['color'],
+                    'precioVenta' => $request->producto['precioventa'],
+                    'costo' => $request->producto['costo'],
+                    'cantidadMinima' => $request->producto['cantidadMinima']
+                ]);
+    
+                UniqueProduct::where('id', $idOriginal)->update([
+                    'id' => $request->producto['idOriginal']
+                ]);      
+
+                // Actualizar imagen en caso de ser necesario
+                $nuevaImagen = $request->file('nuevaImagen');
+                if($nuevaImagen !== null) {
+                    // Elimino la imagen del servidor
+                    File::delete(public_path($request->imagenOriginal));
+
+                    // Subo una nueva imagen
+                    $imagen = $request->file('nuevaImagen');
+                    $nombreImagen = $request->producto['idOriginal'] . "." . $imagen->guessExtension();
+                    $ruta = public_path("img/");
+                    copy($imagen->getRealPath(), $ruta.$nombreImagen);
+
+                    // Actualizo el nombre de la imagen en la BD
+                    Product::where('id', $idOriginal)->update([
+                        'imagen' => $nombreImagen
+                    ]);
+                }
+
+                return $this->volverAInicio('1');
+            }
+            //Petición GET para mostrar el formulario
+            else if($request->isMethod('get')) {
+                if(!isset($request->id)) {
+                    return redirect('/productos');;
+                }
+
+                $producto = Product::find($request->id);        
+                $proveedores = Provider::all();
+                $productosUnicos = UniqueProduct::where('unique_products.id', '=', $request->id)->join('providers', 'unique_products.idProveedor', '=', 'providers.id')->select('unique_products.*', 'providers.nombre')->orderBy('idUnico')->get();
+
+                return view('productos/actualizar', [
+                    'producto' => $producto,
+                    'proveedores' => $proveedores,
+                    'productosUnicos' => $productosUnicos,
+                    'titulo' => 'Actualizar producto ' . $request->id . ' - ' .$producto->nombre
+                ]);
+            }
         } catch (Exception $exception) {
             return $this->volverAInicio('0');
         }
@@ -323,7 +343,7 @@ class ProductsController extends Controller {
                 'stock' => $producto->stock - 1
             ]);    
             
-            unlink(public_path("img/").$producto->imagen);
+            // unlink(public_path("img/").$producto->imagen);
             
             return $this->volverAInicio('3');
         } catch (Exception $exception) {

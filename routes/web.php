@@ -33,8 +33,8 @@ Route::get('/clientes/consultar', 'App\Http\Controllers\CustomersController@cons
 Route::get('/ventas', 'App\Http\Controllers\SalesController@index');
 Route::get('/ventas/consultar', 'App\Http\Controllers\SalesController@consultar');
 Route::get('/consultar-precio', 'App\Http\Controllers\SalesController@consultarPrecio');
-Route::get('/ventas/actualizar', 'App\Http\Controllers\SalesController@consultar');
-Route::post('/ventas/actualizar', 'App\Http\Controllers\SalesController@consultar');
+Route::get('/ventas/actualizar', 'App\Http\Controllers\SalesController@actualizar');
+Route::post('/ventas/actualizar', 'App\Http\Controllers\SalesController@actualizar');
 Route::get('/ventas/reporte', 'App\Http\Controllers\SalesController@reporte');
 
 //Rutas para devoluciones
@@ -56,8 +56,8 @@ Route::post('/productos/registrar', 'App\Http\Controllers\ProductsController@reg
 Route::get('/productos/registrar', 'App\Http\Controllers\ProductsController@registrar')->middleware('is_admin');
 Route::get('/productos/registrar-entrada', 'App\Http\Controllers\ProductsController@registrarEntrada')->middleware('is_admin');
 Route::post('/productos/registrar-entrada', 'App\Http\Controllers\ProductsController@registrarEntrada')->middleware('is_admin');
-Route::get('/productos/actualizar', 'App\Http\Controllers\ProductsController@consultar')->middleware('is_admin');
-Route::post('/productos/actualizar', 'App\Http\Controllers\ProductsController@consultar')->middleware('is_admin');
+Route::get('/productos/actualizar', 'App\Http\Controllers\ProductsController@actualizar')->middleware('is_admin');
+Route::post('/productos/actualizar', 'App\Http\Controllers\ProductsController@actualizar')->middleware('is_admin');
 Route::get('/productos/eliminar', 'App\Http\Controllers\ProductsController@eliminar')->middleware('is_admin');
 Route::get('/productos/catalogo', 'App\Http\Controllers\ProductsController@catalogo')->middleware('is_admin');
 Route::get('/producto-unico/eliminar', 'App\Http\Controllers\ProductsController@productoUnicoEliminar')->middleware('is_admin');
@@ -66,15 +66,15 @@ Route::get('/producto-unico/eliminar', 'App\Http\Controllers\ProductsController@
 //Proveedores
 Route::get('/proveedores/registrar', 'App\Http\Controllers\ProvidersController@registrar')->middleware('is_admin');
 Route::post('/proveedores/registrar', 'App\Http\Controllers\ProvidersController@registrar')->middleware('is_admin');
-Route::get('/proveedores/actualizar', 'App\Http\Controllers\ProvidersController@consultar')->middleware('is_admin');
-Route::post('/proveedores/actualizar', 'App\Http\Controllers\ProvidersController@consultar')->middleware('is_admin');
+Route::get('/proveedores/actualizar', 'App\Http\Controllers\ProvidersController@actualizar')->middleware('is_admin');
+Route::post('/proveedores/actualizar', 'App\Http\Controllers\ProvidersController@actualizar')->middleware('is_admin');
 Route::get('/proveedores/eliminar', 'App\Http\Controllers\ProvidersController@eliminar')->middleware('is_admin');
 
 //Clientes
 Route::get('/clientes/registrar', 'App\Http\Controllers\CustomersController@registrar')->middleware('is_admin');
 Route::post('/clientes/registrar', 'App\Http\Controllers\CustomersController@registrar')->middleware('is_admin');
-Route::get('/clientes/actualizar', 'App\Http\Controllers\CustomersController@consultar')->middleware('is_admin');
-Route::post('/clientes/actualizar', 'App\Http\Controllers\CustomersController@consultar')->middleware('is_admin');
+Route::get('/clientes/actualizar', 'App\Http\Controllers\CustomersController@actualizar')->middleware('is_admin');
+Route::post('/clientes/actualizar', 'App\Http\Controllers\CustomersController@actualizar')->middleware('is_admin');
 Route::get('/clientes/eliminar', 'App\Http\Controllers\CustomersController@eliminar')->middleware('is_admin');
 
 //Ventas
@@ -85,8 +85,8 @@ Route::get('/ventas/eliminar', 'App\Http\Controllers\SalesController@eliminar')-
 //Devoluciones
 Route::get('/devoluciones/registrar', 'App\Http\Controllers\RefundsController@registrar')->middleware('is_admin');
 Route::post('/devoluciones/registrar', 'App\Http\Controllers\RefundsController@registrar')->middleware('is_admin');
-Route::get('/devoluciones/actualizar', 'App\Http\Controllers\RefundsController@consultar')->middleware('is_admin');
-Route::post('/devoluciones/actualizar', 'App\Http\Controllers\RefundsController@consultar')->middleware('is_admin');
+Route::get('/devoluciones/actualizar', 'App\Http\Controllers\RefundsController@actualizar')->middleware('is_admin');
+Route::post('/devoluciones/actualizar', 'App\Http\Controllers\RefundsController@actualizar')->middleware('is_admin');
 Route::get('/devoluciones/eliminar', 'App\Http\Controllers\RefundsController@eliminar')->middleware('is_admin');
 
 

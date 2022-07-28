@@ -7,25 +7,34 @@
         <div class="campo">
 
             <label for="cliente">Cliente:</label>
-                <input type="text"   
-                    @foreach ($clientes as $cliente) 
+            <select required name="venta[idCliente]" id="cliente">    
+                @foreach ($clientes as $cliente) 
+                    <option 
                         @if ($cliente->id === $venta->idCliente)
-                            value="{{ $cliente->nombre }}"
-                            {{ $cliente->nombre }}
+                            {{ 'selected' }}
                         @endif
-                    @endforeach
-                    readonly required name="venta[idCliente]" id="cliente">  
+                        value="{{ $cliente->id }}">
+                        {{ $cliente->nombre }}
+                    </option>
+                @endforeach
+            </select>
+
         </div>
 
         <div class="campo">
             <label for="venta[fecha]">Fecha:</label>
-            <input readonly type="date" name="venta[fecha]" id="fecha" required value="{{ $venta->fecha }}">
+            <input type="date" name="venta[fecha]" id="fecha" required value="{{ $venta->fecha }}">
         </div>
 
         <div class="campo">
             <label for="total">Total:</label>
-            <input readonly value="{{ $venta->total }}" type="text" required name="venta[total]" id="total">
+            <input value="{{ $venta->total }}" type="text" required name="venta[total]" id="total">
         </div>
+        
+        <div class="campo-dos">
+            <input class="boton boton-principal" type="submit" value="Actualizar">
+            <a href="/ventas" class="boton">Volver atrás</a>
+        </div>   
     </form>
 
     <h3>Productos de la venta</h3>
