@@ -7,8 +7,10 @@
             <input class="boton boton-principal" type="submit" value="Buscar" id="buscar">
         </form>
         <div class="opciones">
-            <a href="/{{ strtolower($titulo) }}/registrar" class="boton">Registrar nuevo</a>
-            <a href="/{{ strtolower($titulo) }}/registrar-entrada" class="boton">Entrada de producto existente</a>
+            @if (Auth::user()->is_admin == '1')
+                <a href="/{{ strtolower($titulo) }}/registrar" class="boton">Registrar nuevo</a>
+                <a href="/{{ strtolower($titulo) }}/registrar-entrada" class="boton">Entrada de producto existente</a>
+            @endif
             <a href="/producto-unico/consultar" class="boton">Consultar status de producto único</a>
             <a href="/{{ strtolower($titulo) }}/catalogo" class="boton">Descargar catálogo</a>
         </div>
@@ -60,8 +62,10 @@
                         <td>
                             <div class="acciones">
                                 <a title="Consultar" class="fa-solid fa-eye" href="/{{ strtolower($titulo) }}/consultar?id={{ $dato->id }}"></a>
-                                <a title="Actualizar" class="fa-solid fa-pen-to-square" href="/{{ strtolower($titulo) }}/actualizar?id={{ $dato->id }}"></a>
-                                <a title="Eliminar" class="fa-solid fa-trash-can" onclick="return confirm('¿Seguro que desea eliminar el registro?')" href="/{{ strtolower($titulo) }}/eliminar?id={{ $dato->id }}"></a>
+                                @if (Auth::user()->is_admin == '1')
+                                    <a title="Actualizar" class="fa-solid fa-pen-to-square" href="/{{ strtolower($titulo) }}/actualizar?id={{ $dato->id }}"></a>
+                                    <a title="Eliminar" class="fa-solid fa-trash-can" onclick="return confirm('¿Seguro que desea eliminar el registro?')" href="/{{ strtolower($titulo) }}/eliminar?id={{ $dato->id }}"></a>
+                                @endif
                                 <a title="Generar código de barras" class="fa-solid fa-barcode" href="/{{ strtolower($titulo) }}/barcode?id={{ $dato->id }}"></a>
                             </div>
                         </td>
