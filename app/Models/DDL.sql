@@ -9,13 +9,13 @@ CREATE TABLE products (
     descripcion TEXT,
     color VARCHAR(20),
     stock INT,
-    precioVenta DECIMAL(5, 2)
+    precioVenta DECIMAL(10, 2)
 );
 ALTER TABLE products
 ADD COLUMN imagen VARCHAR(100) AFTER id;
 
 ALTER TABLE products
-ADD COLUMN costo DECIMAL(5, 2) AFTER precioVenta;
+ADD COLUMN costo DECIMAL(10, 2) AFTER precioVenta;
 
 ALTER TABLE products
 ADD COLUMN cantidadMinima INT AFTER stock;
@@ -66,7 +66,7 @@ CREATE TABLE sales (
 	id INT(10) AUTO_INCREMENT PRIMARY KEY,
     idCliente INT(10),
     fecha DATE,
-	total DECIMAL(10, 2)
+	total DECIMAL(20, 2)
 );
 
 ALTER TABLE sales

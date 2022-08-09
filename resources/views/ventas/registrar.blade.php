@@ -22,12 +22,12 @@
         <div class="campo">
             <label class="is-required" for="total">Artículos vendidos:</label>
             <div class="lista-productos">
-                <input required type="text" name="productos[]" class="producto-item" placeholder="ID o SKU">
+                <input required type="text" name="productos[]" class="producto-item" placeholder="ID único. Ej. HAV00100001">
             </div>
         </div>
 
         <div class="campo">
-            <label class="is-required" for="total">Total:</label>
+            <label class="is-required" for="total">Total: $</label>
             <input required type="number" min="1" max="99999" name="venta[total]" id="total">
         </div>
 

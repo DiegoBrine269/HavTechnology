@@ -22,7 +22,7 @@
     <body>
         <main>
             @foreach ($srcs as $src)
-                <img src="{{ $src }}" alt="">
+                <img src="http://bwipjs-api.metafloor.com/?bcid=code128&text={{ $src }}&includetext" alt="">
             @endforeach
         </main>
     </body>

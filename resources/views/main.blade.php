@@ -69,6 +69,9 @@
                     @case('3')
                         <p class="mensaje mensaje-ok"> Registro eliminado exitosamente </p>
                         @break
+                    @case('4')
+                        <p class="mensaje mensaje-error"> El registro no se ha podido eliminar, pues existen registros que dependen de este (Revisar ventas, devoluciones o presupuestos y eliminarlos primero) </p>
+                        @break
                     @default   
                         @break; 
                 @endswitch

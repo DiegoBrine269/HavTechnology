@@ -9,6 +9,8 @@ use App\Models\Refund;
 use App\Models\Product;
 use App\Models\Provider;
 use App\Helpers\AppHelper;
+use App\Models\Estimate;
+use App\Models\EstimateProduct;
 use App\Models\SalesProduct;
 use Illuminate\Http\Request;
 use App\Models\UniqueProduct;
@@ -28,7 +30,7 @@ class ProductsController extends Controller {
     private function volverAInicio($resultado = ''){
         $resultado = '?resultado=' . $resultado;
 
-        return redirect('/productos' . $resultado . $download);
+        return redirect('/productos' . $resultado);
     }
 
     public function index (Request $request) {
@@ -96,6 +98,7 @@ class ProductsController extends Controller {
                 $nuevoProducto->precioVenta = $request->producto['precioventa'];
                 $nuevoProducto->costo = $request->producto['costo'];
                 $nuevoProducto->stock = $request->producto['stock'];
+                $nuevoProducto->cantidadMinima = $request->producto['cantidadMinima'];
                 
                 // Guardar imagen
                 $imagen = $request->file('imagen');
@@ -122,7 +125,7 @@ class ProductsController extends Controller {
                     $nuevoProductoUnico->save();
                     
                     //Creación de código de barras
-                    $srcs [] = "http://bwipjs-api.metafloor.com/?bcid=code128&text=" . $nuevoProductoUnico->idUnico . "&includetext";
+                    $srcs [] = $nuevoProductoUnico->idUnico;
                 }  
     
                 return \AppHelper::generarBarcodesPDF($srcs, $request->producto['id']);
@@ -208,7 +211,7 @@ class ProductsController extends Controller {
                     $nuevoProductoUnico->idProveedor = $request->producto['idProveedor'];
                     $nuevoProductoUnico->fechaIngreso = $request->producto['fechaIngreso'];
 
-                    $srcs [] = "http://bwipjs-api.metafloor.com/?bcid=code128&text=" . $nuevoProductoUnico->idUnico . "&includetext";
+                    $srcs [] = $nuevoProductoUnico->idUnico;
 
                     $nuevoProductoUnico->save();
                 }  
@@ -360,7 +363,18 @@ class ProductsController extends Controller {
         if(!isset($request->id)) 
             return redirect('/productos');
 
-        return  \AppHelper::generarBarcodesPDF(["http://bwipjs-api.metafloor.com/?bcid=code128&text=" . $request->id . "&includetext"], $request->id);
+        $productos = UniqueProduct::where('id', '=', $request->id)->where('existe', '=', '1')->get();
+        $srcs = [];
+
+        foreach ($productos as $producto) {
+            $srcs [] = $producto->idUnico;
+        }
+    
+        // dd($srcs);
+
+        return  \AppHelper::generarBarcodesPDF($srcs, $request->id);
+
+        // return  \AppHelper::generarBarcodesPDF(["http://bwipjs-api.metafloor.com/?bcid=code128&text=" . $request->id . "&includetext"], $request->id);
     }
 
 
@@ -370,9 +384,17 @@ class ProductsController extends Controller {
             return redirect('/productos');
         
         try {
+            //Validando que no exisan dependencias del registro en cuestión
+            $existePresupuesto = EstimateProduct::where('idProducto', '=', $request->id)->exists();
+            $existeVenta = SalesProduct::where('idProducto', 'like', $request->id . '%')->exists();
+            $existeDevolucion = Refund::where('idProducto', 'like', $request->id . '%')->exists();
+        
+            if($existePresupuesto || $existeVenta || $existeDevolucion) {
+                return $this->volverAInicio('4');
+            }
+
             $nombreImagen = Product::where('id','=', $request->id)->select('imagen')->get()[0]->imagen;
             
-            // dd($nombreImagen);
             UniqueProduct::where('id','=', $request->id)->delete();
             Product::where('id','=', $request->id)->delete();
             

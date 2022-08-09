@@ -17,7 +17,7 @@ function agregarInput () {
         input.required = 'true';
         input.type = 'text';
         input.name = 'productos[]';
-        input.placeholder = 'ID o SKU';
+        input.placeholder = 'ID único. Ej. HAV00100001';
         input.classList.add('producto-item');
         
         lista.appendChild(input);
