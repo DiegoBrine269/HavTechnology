@@ -41,8 +41,10 @@ class ProvidersController extends Controller {
             if($request->isMethod('post')) { 
                 $nuevoProveedor = new Provider();
     
+                dd(str_replace(" ", "", $request->proveedor['telefono']));
+
                 $nuevoProveedor->nombre = $request->proveedor['nombre'];
-                $nuevoProveedor->telefono = $request->proveedor['telefono'];
+                $nuevoProveedor->telefono = str_replace(" ", "", $request->proveedor['telefono']);
                 $nuevoProveedor->correo = $request->proveedor['correo'];
                 
                 $nuevoProveedor->save();
@@ -85,7 +87,7 @@ class ProvidersController extends Controller {
             if($request->isMethod('post')){
                 Provider::where('id', $request->proveedor['id'])->update([
                     'nombre' => $request->proveedor['nombre'],
-                    'telefono' => $request->proveedor['telefono'],
+                    'telefono' => str_replace(" ", "", $request->proveedor['telefono']), 
                     'correo' => $request->proveedor['correo']
                 ]);      
 

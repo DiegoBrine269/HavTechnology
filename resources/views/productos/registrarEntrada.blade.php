@@ -6,7 +6,7 @@
         <p class="alinear-derecha is-required"> Campos obligatorios</p>
         <div class="campo">
             <label class="is-required" for="id">ID (SKU):</label>
-            <input placeholder="Ej. HAV-001" required type="text" value="" name="producto[id]" id="id">
+            <input placeholder="Ej. HAV001" required type="text" value="" name="producto[id]" id="id">
         </div>
 
         <div class="campo">

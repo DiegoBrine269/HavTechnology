@@ -10,8 +10,8 @@
         </div>
 
         <div class="campo">
-            <label class="is-required" for="telefono">Teléfono:</label>
-            <input required type="tel" name="proveedor[telefono]" id="telefono">
+            <label class="is-required" for="telefono">Teléfono: (10 dígitos)</label>
+            <input required type="tel" name="proveedor[telefono]" id="telefono" placeholder="Ej. 5512345678">
         </div>
 
         <div class="campo">
