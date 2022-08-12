@@ -41,7 +41,7 @@ class ProvidersController extends Controller {
             if($request->isMethod('post')) { 
                 $nuevoProveedor = new Provider();
     
-                dd(str_replace(" ", "", $request->proveedor['telefono']));
+                // dd(str_replace(" ", "", $request->proveedor['telefono']));
 
                 $nuevoProveedor->nombre = $request->proveedor['nombre'];
                 $nuevoProveedor->telefono = str_replace(" ", "", $request->proveedor['telefono']);
