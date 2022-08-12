@@ -6,12 +6,12 @@
         <p class="alinear-derecha is-required"> Campos obligatorios</p>
         <div class="campo">
             <label for="idUnico">Cliente:</label>
-            <input type="text" name="presupuesto[nombreCliente]" id="idUnico">
+            <input type="text" name="presupuesto[nombreCliente]" id="idUnico" placeholder="Ej. Juan Sánchez">
         </div>
 
         <div class="campo">
             <label for="correo">Correo:</label>
-            <input type="email" name="presupuesto[correo]" id="correo">
+            <input type="email" name="presupuesto[correo]" id="correo" placeholder="alguien@ejemplo.com">
         </div>
 
         <div class="campo">

@@ -6,11 +6,11 @@
         <p class="alinear-derecha is-required"> Campos obligatorios</p>
         <div class="campo">
             <label class="is-required" for="id">ID (SKU):</label>
-            <input required type="text" name="producto[id]" id="id">
+            <input required type="text" name="producto[id]" id="id" placeholder="Ej. HAV001">
         </div>
         <div class="campo">
             <label class="is-required" for="nombre">Nombre:</label>
-            <input required type="text" name="producto[nombre]" id="nombre">
+            <input required type="text" name="producto[nombre]" id="nombre" placeholder="Ej. Temporizador digital">
         </div>
 
         <div class="campo">
@@ -25,32 +25,32 @@
 
         <div class="campo">
             <label class="is-required" for="color">Color:</label>
-            <input required type="text" name="producto[color]" id="color">
+            <input required type="text" name="producto[color]" id="color" placeholder="Ej. Negro">
         </div>
 
         <div class="campo">
             <label class="is-required" for="precioventa">Precio de venta:</label>
-            <input required type="number" min="1" max="99999" name="producto[precioventa]" id="precioventa">
+            <input required type="number" min="1" max="99999" name="producto[precioventa]" id="precioventa" placeholder="Ej. 500">
         </div>
 
         <div class="campo">
             <label class="is-required" for="precioventa">Costo:</label>
-            <input required type="number" min="1" max="99999" name="producto[costo]" id="costo">
+            <input required type="number" min="1" max="99999" name="producto[costo]" id="costo" placeholder="Ej. 200">
         </div>
 
         <div class="campo">
             <label class="is-required" for="lote">Lote:</label>
-            <input required type="number" min="1" max="99999" name="producto[lote]" id="lote">
+            <input required type="number" min="1" max="99999" name="producto[lote]" id="lote" placeholder="Ej. 1">
         </div>
 
         <div class="campo">
             <label class="is-required" for="stock">Cantidad que ingresa:</label>
-            <input required type="number" min="1" max="99999" name="producto[stock]" id="cantidad">
+            <input required type="number" min="1" max="99999" name="producto[stock]" id="cantidad" placeholder="Ej. 20">
         </div>
 
         <div class="campo">
             <label class="is-required" for="stock">Cantidad mínima:</label>
-            <input required type="number" min="1" max="99999" name="producto[cantidadMinima]" id="cantidadMinima">
+            <input required type="number" min="1" max="99999" name="producto[cantidadMinima]" id="cantidadMinima" placeholder="Ej. 5">
         </div>
         
         <div class="campo">

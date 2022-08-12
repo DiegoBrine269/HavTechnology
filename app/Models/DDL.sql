@@ -49,6 +49,8 @@ CREATE TABLE providers (
     telefono CHAR(10),
     correo VARCHAR(100)
 );
+ALTER TABLE providers MODIFY COLUMN last_name VARCHAR(100);
+
 
 CREATE TABLE customers (
     id INT(10) AUTO_INCREMENT PRIMARY KEY,
